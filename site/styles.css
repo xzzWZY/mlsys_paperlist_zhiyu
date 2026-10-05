@@ -318,16 +318,6 @@ input[type=checkbox] {
   text-decoration-thickness:1px;
   text-underline-offset:4px;
 }
-.summary {
-  font-size:13px;
-  line-height:1.75;
-  color:#657168;
-  margin:0 0 18px;
-  display:-webkit-box;
-  -webkit-line-clamp:3;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
 .card-bottom {
   display:flex;
   flex-wrap:wrap;
@@ -433,22 +423,6 @@ dialog::backdrop {
 }
 .detail-note h3 {
   font-size:14px;
-}
-.note-body {
-  font-size:14px;
-  overflow-wrap:anywhere;
-}
-.note-body h2 {
-  font:20px Georgia,serif;
-  margin-top:24px;
-}
-.note-body a {
-  text-decoration:underline;
-}
-.note-body pre {
-  overflow:auto;
-  background:var(--bg);
-  padding:15px;
 }
 .note-caption {
   font-size:11px;

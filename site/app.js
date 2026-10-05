@@ -72,8 +72,7 @@ function openDetail(id) {
   for (const n of entries) {
     const section = el("section", "detail-note");
     section.append(el("h3", "", `${n.member_name}${n.example ? " · Example" : ""}`), el("p", "note-caption", `Added ${dateLabel(n.added_at)} · ${n.week}${n.pending ? " · Preview timestamp" : ""}`));
-    const body = el("div", "note-body"); body.innerHTML = n.html; // Sanitized at build time with an explicit allowlist.
-    section.append(body, link("View source note ↗", `${config.repository}/blob/main/${n.source}`, "paper-link")); detail.append(section);
+    section.append(link("View source entry ↗", `${config.repository}/blob/main/${n.source}`, "paper-link")); detail.append(section);
   }
   history.replaceState(null, "", `#paper=${encodeURIComponent(id)}`);
   if (!$("paper-dialog").open) $("paper-dialog").showModal();
@@ -92,10 +91,10 @@ function card(entries) {
   button.addEventListener("click", () => openDetail(n.paper_id)); heading.append(button);
   const bottom = el("div", "card-bottom");
   const allNotes = library().filter(e => e.paper_id === n.paper_id).length;
-  const detailButton = el("button", "text-button paper-link", `${allNotes} ${allNotes === 1 ? "note" : "notes"} · Read more ↗`);
+  const detailButton = el("button", "text-button paper-link", `${allNotes} ${allNotes === 1 ? "submission" : "submissions"} · Details ↗`);
   detailButton.addEventListener("click", () => openDetail(n.paper_id));
   bottom.append(tags([...new Set(entries.flatMap(e => e.topics))]), detailButton);
-  card.append(meta, heading, el("p", "summary", n.summary), bottom); return card;
+  card.append(meta, heading, bottom); return card;
 }
 function memberStats(member, all) {
   const today = localDate(new Date()), current = isoWeek(today);
@@ -112,14 +111,14 @@ function render() {
   const current = isoWeek(localDate(new Date()));
   $("example-banner").hidden = !$("examples").checked;
   $("stats").replaceChildren();
-  for (const [value, label] of [[new Set(all.map(n => n.paper_id)).size, "PAPERS IN THE LIBRARY"], [all.filter(n => n.week === current).length, "NOTES THIS WEEK"], [new Set(all.flatMap(n => n.topics)).size, "RESEARCH TOPICS"], [$("examples").checked ? new Set(all.map(n => n.member)).size : Object.keys(config.members).length, "READERS"]]) {
+  for (const [value, label] of [[new Set(all.map(n => n.paper_id)).size, "PAPERS IN THE LIBRARY"], [all.filter(n => n.week === current).length, "SUBMISSIONS THIS WEEK"], [new Set(all.flatMap(n => n.topics)).size, "RESEARCH TOPICS"], [$("examples").checked ? new Set(all.map(n => n.member)).size : Object.keys(config.members).length, "READERS"]]) {
     const stat = el("div", "stat"); stat.append(el("strong", "", value), el("span", "", label)); $("stats").append(stat);
   }
-  const filtered = all.filter(n => (!$("topic").value || n.topics.includes($("topic").value)) && (!$("week").value || n.week === $("week").value) && (!$("member").value || n.member === $("member").value) && (!query || `${n.title} ${n.body} ${n.paper_id} ${n.member_name}`.toLowerCase().includes(query)));
-  const titles = {week:["THE WEEKLY EDIT", "A little reading, every week."], topic:["FOLLOW A THREAD", "Ideas across research areas."], member:["THE PEOPLE BEHIND THE NOTES", "A shared reading habit."]};
+  const filtered = all.filter(n => (!$("topic").value || n.topics.includes($("topic").value)) && (!$("week").value || n.week === $("week").value) && (!$("member").value || n.member === $("member").value) && (!query || `${n.title} ${n.paper_id} ${n.member_name} ${n.venue || ""}`.toLowerCase().includes(query)));
+  const titles = {week:["THE WEEKLY EDIT", "A little reading, every week."], topic:["FOLLOW A THREAD", "Ideas across research areas."], member:["THE PEOPLE BEHIND THE PAPERS", "A shared reading habit."]};
   $("view-kicker").textContent = titles[view][0]; $("view-title").textContent = titles[view][1];
   const paperCount = new Set(filtered.map(n => n.paper_id)).size;
-  $("result-count").textContent = `${paperCount} ${paperCount === 1 ? "paper" : "papers"} · ${filtered.length} ${filtered.length === 1 ? "note" : "notes"}${$("examples").checked ? " · example data" : ""}`;
+  $("result-count").textContent = `${paperCount} ${paperCount === 1 ? "paper" : "papers"} · ${filtered.length} ${filtered.length === 1 ? "submission" : "submissions"}${$("examples").checked ? " · example data" : ""}`;
   document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === view)));
   const groups = new Map();
   for (const n of filtered) {
@@ -133,17 +132,17 @@ function render() {
   for (const key of [...groups.keys()].sort((a,b) => view === "week" ? b.localeCompare(a) : a.localeCompare(b))) {
     const entries = groups.get(key), section = el("section", "group"), header = el("div", "group-heading");
     const name = view === "week" ? weekLabel(key) : view === "topic" ? config.topics[key] : (config.members[key] || "Example reader");
-    header.append(el("h3", "", name), el("span", "", `${view === "week" ? key + " · " : ""}${entries.length} ${entries.length === 1 ? "note" : "notes"}`)); section.append(header);
+    header.append(el("h3", "", name), el("span", "", `${view === "week" ? key + " · " : ""}${entries.length} ${entries.length === 1 ? "submission" : "submissions"}`)); section.append(header);
     if (view === "member") section.append(memberStats(key, all));
     const papers = new Map();
     for (const note of entries) { if (!papers.has(note.paper_id)) papers.set(note.paper_id, []); papers.get(note.paper_id).push(note); }
     for (const paper of papers.values()) section.append(card(paper));
-    if (!entries.length) section.append(el("p", "note-caption", "No reading notes yet. Start with the paper template."));
+    if (!entries.length) section.append(el("p", "note-caption", "No papers submitted yet. Start with the paper template."));
     $("results").append(section);
   }
   if (!groups.size) {
     const empty = el("div", "empty");
-    empty.append(el("h3", "", all.length ? "No papers match these filters." : "Your reading library starts here."), el("p", "", all.length ? "Try another keyword or reset the filters." : "Copy the paper template, add a short note, and push it to the repository."));
+    empty.append(el("h3", "", all.length ? "No papers match these filters." : "Your reading library starts here."), el("p", "", all.length ? "Try another keyword or reset the filters." : "Fill in the paper template and push it to the repository."));
     if (!all.length) empty.append(link("Open the contribution guide ↗", $("guide-link").href, "paper-link")); $("results").append(empty);
   }
 }

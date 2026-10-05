@@ -81,7 +81,6 @@ class BuildTests(unittest.TestCase):
     def test_invalid_content_fails_without_partial_recording(self):
         cases = [
             self.text.replace("llm-inference", "unknown-topic"),
-            self.text.replace("## Summary", "## Abstract"),
             self.text.replace("https://arxiv.org/abs/2309.06180", "javascript:alert(1)"),
             self.text.replace("year: 2023", "year: true"),
             self.text.replace("year: 2023", 'year: 2023\nadded_at: "2020-01-01"'),
@@ -100,11 +99,14 @@ class BuildTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown member"):
             builder.collect(self.root)
 
-    def test_rendering_does_not_allow_active_content(self):
-        result = builder.render_markdown('<script>alert(1)</script>\n\n[bad](javascript:alert(1))\n\n**Good**')
-        self.assertNotIn("<script>", result)
-        self.assertNotIn('href="javascript:', result)
-        self.assertIn("<strong>Good</strong>", result)
+    def test_metadata_only_and_legacy_body(self):
+        self.add_note(self.text.rstrip())
+        note = builder.collect(self.root)[2][0]
+        self.assertEqual(note["paper_id"], "arxiv:2309.06180")
+        self.add_note(self.text + "\n## Summary\n<script>legacy text</script>\n")
+        note = builder.collect(self.root)[2][0]
+        for field in ("summary", "body", "html"):
+            self.assertNotIn(field, note)
 
     def test_invalid_ledger_is_not_silently_overwritten(self):
         (self.root / "data/added_at.json").write_text('{"bad": "2026-01-01"}')

@@ -2,7 +2,6 @@
 """Validate reading notes and build a portable static site (Python 3.9+)."""
 import argparse
 from datetime import datetime, timezone
-import html
 import json
 from pathlib import Path
 import re
@@ -11,12 +10,9 @@ import sys
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
-import bleach
-import markdown
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_SECTIONS = ("Summary", "Relevance to my research")
 
 
 def canonical_id(value):
@@ -44,17 +40,9 @@ def week_of(value, tz):
     return f"{year}-W{week:02d}"
 
 
-def render_markdown(body):
-    return bleach.clean(
-        markdown.markdown(html.escape(body), extensions=["fenced_code"]),
-        tags={"p", "h2", "h3", "h4", "ul", "ol", "li", "em", "strong", "a", "code", "pre", "blockquote", "hr", "br"},
-        attributes={"a": ["href", "title"]}, protocols={"https", "http"}, strip=True,
-    )
-
-
 def load_note(path, root, config, ledger, now, example=False):
     text = path.read_text(encoding="utf-8")
-    match = re.fullmatch(r"---\r?\n(.*?)\r?\n---\r?\n(.*)", text, re.S)
+    match = re.fullmatch(r"---\r?\n(.*?)\r?\n---(?:\r?\n(.*))?", text, re.S)
     if not match:
         raise ValueError("expected YAML front matter between --- lines")
     meta = yaml.safe_load(match[1])
@@ -80,14 +68,6 @@ def load_note(path, root, config, ledger, now, example=False):
         raise ValueError("topics must contain 1–3 IDs from config/site.json")
     if len(set(topics)) != len(topics):
         raise ValueError("topics must not contain duplicates")
-    body = match[2].strip()
-    sections = {}
-    for part in re.split(r"^## +", body, flags=re.M)[1:]:
-        heading, _, content = part.partition("\n")
-        sections[heading.strip()] = content.strip()
-    for heading in REQUIRED_SECTIONS:
-        if not sections.get(heading) or sections[heading].startswith("Replace with"):
-            raise ValueError(f"fill in the '## {heading}' section")
     if meta["title"].startswith("Replace with"):
         raise ValueError("replace the template title")
     member = path.parent.name
@@ -101,7 +81,6 @@ def load_note(path, root, config, ledger, now, example=False):
                 member_name="Example reader" if example else config["members"][member],
                 added_at=added, week=week_of(added, config["timezone"]),
                 pending=not example and identity not in ledger, example=example,
-                summary=sections["Summary"], body=body, html=render_markdown(body),
                 source=path.relative_to(root).as_posix())
 
 
