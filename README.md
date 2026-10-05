@@ -1,4 +1,4 @@
-# Zhiyu's paperlist
+# example paperlist
 
 A public prototype of a shared reading library for **ML systems and ML algorithms**. Add a Markdown note, push it, and let GitHub Actions validate and publish the library.
 
