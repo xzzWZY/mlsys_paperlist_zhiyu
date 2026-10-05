@@ -1,0 +1,24 @@
+{
+  "title": "Zhiyu’s paperlist",
+  "subtitle": "A reading notebook for machine learning systems and algorithms.",
+  "repository": "https://github.com/xzzWZY/mlsys_paperlist_zhiyu",
+  "timezone": "America/Chicago",
+  "weekly_target": 2,
+  "members": {"xzzWZY": "Zhiyu Wu"},
+  "topics": {
+    "llm-inference": "LLM inference",
+    "distributed-training": "Distributed training",
+    "compilers-kernels": "Compilers & kernels",
+    "hardware-systems": "Hardware & systems",
+    "quantization": "Quantization",
+    "pruning-distillation": "Pruning & distillation",
+    "efficient-finetuning": "Efficient fine-tuning",
+    "optimization": "Optimization",
+    "architectures": "Architectures",
+    "reasoning-agents": "Reasoning & agents",
+    "rl-post-training": "RL & post-training",
+    "data-centric-ml": "Data-centric ML",
+    "evaluation": "Evaluation",
+    "multimodal": "Multimodal learning"
+  }
+}

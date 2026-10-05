@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A shared reading notebook for machine learning systems and algorithms.">
+  <title>Paperlist</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./data.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#"><span class="mark">p.</span> THE READING ROOM</a><a id="repo-link" class="quiet-link">View repository ↗</a></header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">ML SYSTEMS / ML ALGORITHMS</p><h1 id="site-title">Paperlist</h1><p class="subtitle" id="subtitle"></p></div>
+      <a class="primary" id="contribute-link">+ Add a paper</a>
+    </section>
+    <section class="stats" aria-label="Library overview" id="stats"></section>
+    <section class="workspace">
+      <aside>
+        <p class="eyebrow">EXPLORE THE LIBRARY</p>
+        <nav aria-label="Library views" class="view-nav">
+          <button data-view="week" aria-pressed="true">By week <span>↗</span></button>
+          <button data-view="topic" aria-pressed="false">By topic <span>↗</span></button>
+          <button data-view="member" aria-pressed="false">By member <span>↗</span></button>
+        </nav>
+        <div class="rhythm"><span class="small-symbol">↗</span><h3>A small weekly habit.</h3><p>Add two papers. Write down what matters. Build a library worth returning to.</p><a id="guide-link">Read the contribution guide →</a></div>
+        <p class="sidebar-note" id="timezone-note"></p>
+      </aside>
+      <section class="library" aria-label="Reading notes">
+        <div class="library-heading"><div><p class="eyebrow" id="view-kicker">THE WEEKLY EDIT</p><h2 id="view-title">A little reading, every week.</h2></div><label class="demo-toggle"><input type="checkbox" id="examples"> Example library</label></div>
+        <div class="example-banner" id="example-banner" hidden>Illustrative notes, not personal reading history. Turn off the example library to see real contributions.</div>
+        <div class="filters">
+          <label class="search-label"><span class="sr-only">Search papers and notes</span><input id="search" type="search" placeholder="Search titles, notes, or paper IDs…"></label>
+          <label><span class="sr-only">Filter by topic</span><select id="topic"><option value="">All topics</option></select></label>
+          <label><span class="sr-only">Filter by week</span><select id="week"><option value="">All weeks</option></select></label>
+          <label><span class="sr-only">Filter by member</span><select id="member"><option value="">All members</option></select></label>
+        </div>
+        <div class="result-line"><p id="result-count" role="status" aria-live="polite"></p><button id="clear" class="text-button">Reset filters</button></div>
+        <div id="results"></div>
+      </section>
+    </section>
+  </main>
+  <footer><span>Read thoughtfully. Keep a record. Share what connects.</span><span>Built from Markdown & Git.</span></footer>
+  <dialog id="paper-dialog" aria-labelledby="detail-title"><div class="dialog-top"><span class="eyebrow">PAPER & READING NOTES</span><button id="close-dialog" aria-label="Close paper details">✕</button></div><div id="detail"></div></dialog>
+  <noscript>This interactive library requires JavaScript. The Markdown notes are also available in the repository.</noscript>
+</body>
+</html>
