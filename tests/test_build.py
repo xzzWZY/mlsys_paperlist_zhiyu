@@ -108,6 +108,22 @@ class BuildTests(unittest.TestCase):
         for field in ("summary", "body", "html"):
             self.assertNotIn(field, note)
 
+    def test_asset_urls_change_when_content_changes(self):
+        import re
+        builder.build(self.root)
+        first = (self.root / "dist/index.html").read_text()
+        urls = re.findall(r'(?:src|href)="\./([^\"]+)"', first)
+        self.assertEqual(len(urls), 3)
+        for url in urls:
+            self.assertTrue((self.root / "dist" / url).is_file())
+        app = self.root / "site/app.js"
+        app.write_text(app.read_text() + "\n// Updated version\n")
+        builder.build(self.root)
+        second = (self.root / "dist/index.html").read_text()
+        self.assertNotEqual(first, second)
+        self.assertNotIn('src="./app.js"', second)
+        self.assertNotIn('src="./data.js"', second)
+
     def test_invalid_ledger_is_not_silently_overwritten(self):
         (self.root / "data/added_at.json").write_text('{"bad": "2026-01-01"}')
         with self.assertRaisesRegex(ValueError, "timezone"):

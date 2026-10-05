@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Validate reading notes and build a portable static site (Python 3.9+)."""
 import argparse
+import hashlib
 from datetime import datetime, timezone
 import json
 from pathlib import Path
 import re
-import shutil
 import sys
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
@@ -130,10 +130,17 @@ def build(root=ROOT, record=False, check=False):
         temp.replace(ledger_path)
     dist = root / "dist"
     dist.mkdir(exist_ok=True)
-    for name in ("index.html", "styles.css", "app.js"):
-        shutil.copyfile(root / "site" / name, dist / name)
     payload = {"config": config, "notes": notes}
-    (dist / "data.js").write_text("window.PAPERLIST = " + json.dumps(payload, ensure_ascii=True).replace("<", "\\u003c") + ";\n")
+    assets = {name: (root / "site" / name).read_bytes() for name in ("styles.css", "app.js")}
+    assets["data.js"] = ("window.PAPERLIST = " + json.dumps(payload, ensure_ascii=True).replace("<", "\\u003c") + ";\n").encode("utf-8")
+    page = (root / "site/index.html").read_text(encoding="utf-8")
+    for name, content in assets.items():
+        version = hashlib.sha256(content).hexdigest()[:16]
+        path = Path(name)
+        filename = f"{path.stem}.{version}{path.suffix}"
+        (dist / filename).write_bytes(content)
+        page = page.replace(f'./{name}', f'./{filename}')
+    (dist / "index.html").write_text(page, encoding="utf-8")
     (dist / ".nojekyll").touch()
     print(f"Built {len(notes)} notes → {dist}")
 
