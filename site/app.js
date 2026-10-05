@@ -57,44 +57,49 @@ function tags(topics) {
   const wrap = el("div", "tags");
   for (const t of topics) {
     const b = el("button", "tag", config.topics[t]);
-    b.addEventListener("click", () => { $("topic").value = t; closeDetail(); render(); }); wrap.append(b);
+    b.addEventListener("click", () => { $("topic").value = t; render(); }); wrap.append(b);
   }
   return wrap;
 }
-function openDetail(id) {
-  const entries = library().filter(n => n.paper_id === id);
-  if (!entries.length) return;
-  const first = entries[0], detail = $("detail"); detail.replaceChildren();
-  const title = el("h2", "", first.title); title.id = "detail-title";
-  detail.append(title, el("p", "note-caption", `${first.venue || "Paper"} · ${first.year} · ${first.paper_id}`), link("Read original paper ↗", first.url, "paper-link"));
-  if (first.code_url) detail.append(document.createTextNode(" · "), link("Code ↗", first.code_url, "paper-link"));
-  detail.append(tags([...new Set(entries.flatMap(n => n.topics))]));
-  for (const n of entries) {
-    const section = el("section", "detail-note");
-    section.append(el("h3", "", `${n.member_name}${n.example ? " · Example" : ""}`), el("p", "note-caption", `Added ${dateLabel(n.added_at)} · ${n.week}${n.pending ? " · Preview timestamp" : ""}`));
-    section.append(link("View source entry ↗", `${config.repository}/blob/main/${n.source}`, "paper-link")); detail.append(section);
+function paperTable(papers, name) {
+  const wrap = el("div", "table-scroll"); wrap.tabIndex = 0;
+  wrap.setAttribute("role", "region"); wrap.setAttribute("aria-label", `${name} papers`);
+  const table = el("table", "paper-table"), head = el("thead"), header = el("tr"), body = el("tbody");
+  const caption = el("caption", "sr-only", name); table.append(caption);
+  for (const label of ["Paper", "Year / venue", "Topics", "Added by", "Added"] ) {
+    const th = el("th", "", label); th.scope = "col"; header.append(th);
   }
-  history.replaceState(null, "", `#paper=${encodeURIComponent(id)}`);
-  if (!$("paper-dialog").open) $("paper-dialog").showModal();
-}
-function closeDetail() {
-  if ($("paper-dialog").open) $("paper-dialog").close();
-  if (location.hash.startsWith("#paper=")) history.replaceState(null, "", location.pathname + location.search);
-}
-function card(entries) {
-  const n = entries[0], card = el("article", "card");
-  const meta = el("div", "card-meta");
-  meta.append(el("span", "", `${n.venue || "Paper"} · ${n.year}`), el("span", "", " / "), el("span", "", [...new Set(entries.map(e => e.member_name))].join(", ")));
-  if (n.example) meta.append(el("span", "example-tag", "EXAMPLE"));
-  if (n.pending) meta.append(el("span", "example-tag", "PREVIEW DATE"));
-  const heading = el("h4", "paper-title"), button = el("button", "title-button", n.title);
-  button.addEventListener("click", () => openDetail(n.paper_id)); heading.append(button);
-  const bottom = el("div", "card-bottom");
-  const allNotes = library().filter(e => e.paper_id === n.paper_id).length;
-  const detailButton = el("button", "text-button paper-link", `${allNotes} ${allNotes === 1 ? "submission" : "submissions"} · Details ↗`);
-  detailButton.addEventListener("click", () => openDetail(n.paper_id));
-  bottom.append(tags([...new Set(entries.flatMap(e => e.topics))]), detailButton);
-  card.append(meta, heading, bottom); return card;
+  head.append(header); table.append(head, body);
+  const rows = [...papers.values()];
+  const mode = $("sort").value;
+  rows.sort((a, b) => {
+    const x = a[0], y = b[0];
+    if (mode === "title") return x.title.localeCompare(y.title);
+    if (mode === "year") return y.year - x.year || x.title.localeCompare(y.title);
+    const order = new Date(y.added_at) - new Date(x.added_at);
+    return (mode === "oldest" ? -order : order) || x.title.localeCompare(y.title);
+  });
+  for (const entries of rows) {
+    const n = entries[0], row = el("tr"), paper = el("td", "paper-cell");
+    paper.append(link(n.title, n.url, "paper-title-link"));
+    if (n.code_url) paper.append(document.createTextNode(" "), link("Code ↗", n.code_url, "paper-link"));
+    const publication = el("td", "publication");
+    publication.append(el("span", "", n.year), el("small", "", n.venue || ""));
+    const topicCell = el("td"); topicCell.append(tags([...new Set(entries.flatMap(e => e.topics))]));
+    const members = el("td", "contributors");
+    for (const entry of entries) {
+      const source = link(entry.member_name, `${config.repository}/blob/main/${entry.source}`, "source-link");
+      source.title = `Source: ${entry.source}`; members.append(source);
+    }
+    const dates = el("td", "added-dates");
+    for (const entry of entries) {
+      const date = el("span", "", dateLabel(entry.added_at));
+      date.title = `${entry.member_name} · ${entry.week}${entry.pending ? " · Preview date" : ""}`;
+      dates.append(date);
+    }
+    row.append(paper, publication, topicCell, members, dates); body.append(row);
+  }
+  wrap.append(table); return wrap;
 }
 function memberStats(member, all) {
   const today = localDate(new Date()), current = isoWeek(today);
@@ -136,23 +141,18 @@ function render() {
     if (view === "member") section.append(memberStats(key, all));
     const papers = new Map();
     for (const note of entries) { if (!papers.has(note.paper_id)) papers.set(note.paper_id, []); papers.get(note.paper_id).push(note); }
-    for (const paper of papers.values()) section.append(card(paper));
-    if (!entries.length) section.append(el("p", "note-caption", "No papers submitted yet. Start with the paper template."));
+    if (papers.size) section.append(paperTable(papers, name));
+    if (!entries.length) section.append(el("p", "note-caption", "No papers submitted yet. Start with the weekly YAML template."));
     $("results").append(section);
   }
   if (!groups.size) {
     const empty = el("div", "empty");
-    empty.append(el("h3", "", all.length ? "No papers match these filters." : "Your reading library starts here."), el("p", "", all.length ? "Try another keyword or reset the filters." : "Fill in the paper template and push it to the repository."));
+    empty.append(el("h3", "", all.length ? "No papers match these filters." : "Your reading library starts here."), el("p", "", all.length ? "Try another keyword or reset the filters." : "Fill in the weekly YAML template and push it to the repository."));
     if (!all.length) empty.append(link("Open the contribution guide ↗", $("guide-link").href, "paper-link")); $("results").append(empty);
   }
 }
 document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {view = b.dataset.view; render();}));
-for (const id of ["search", "topic", "week", "member"]) $(id).addEventListener(id === "search" ? "input" : "change", render);
-$("examples").addEventListener("change", () => {closeDetail(); refreshFilters(); render();});
-$("clear").addEventListener("click", () => { for (const id of ["search", "topic", "week", "member"]) $(id).value = ""; render(); });
-$("close-dialog").addEventListener("click", closeDetail);
-$("paper-dialog").addEventListener("cancel", event => {event.preventDefault(); closeDetail();});
-$("paper-dialog").addEventListener("click", event => {if (event.target === $("paper-dialog")) {const r = event.target.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) closeDetail();}});
-function openHash() { if (location.hash.startsWith("#paper=")) { try { const id = decodeURIComponent(location.hash.slice(7)); const found = notes.find(n => n.paper_id === id && !n.example) || notes.find(n => n.paper_id === id); if (found) {$("examples").checked = found.example; refreshFilters(); render(); openDetail(id);} } catch (_) { /* Ignore malformed external fragments. */ } } }
-window.addEventListener("hashchange", openHash);
-refreshFilters(); render(); openHash();
+for (const id of ["search", "topic", "week", "member", "sort"]) $(id).addEventListener(id === "search" ? "input" : "change", render);
+$("examples").addEventListener("change", () => {refreshFilters(); render();});
+$("clear").addEventListener("click", () => { for (const id of ["search", "topic", "week", "member"]) $(id).value = ""; $("sort").value = "newest"; render(); });
+refreshFilters(); render();

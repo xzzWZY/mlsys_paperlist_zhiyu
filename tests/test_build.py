@@ -21,8 +21,11 @@ class BuildTests(unittest.TestCase):
         (self.root / "data/added_at.json").write_text("{}\n")
         self.member_dir = self.root / "entries/xzzWZY"
         self.member_dir.mkdir(parents=True)
-        self.text = (ROOT / "examples/demo-reader/pagedattention.md").read_text()
-        self.text = "\n".join(line for line in self.text.splitlines() if not line.startswith("example_added_at:")) + "\n"
+        self.text = '\n'.join([
+            '---', 'paper_id: "arxiv:2309.06180"', 'title: "PagedAttention"',
+            'url: "https://arxiv.org/abs/2309.06180"', 'year: 2023',
+            'topics: [llm-inference]', '---', ''
+        ])
 
     def add_note(self, text=None, name="paper.md"):
         path = self.member_dir / name
@@ -84,7 +87,7 @@ class BuildTests(unittest.TestCase):
             self.text.replace("https://arxiv.org/abs/2309.06180", "javascript:alert(1)"),
             self.text.replace("year: 2023", "year: true"),
             self.text.replace("year: 2023", 'year: 2023\nadded_at: "2020-01-01"'),
-            (ROOT / "templates/paper.md").read_text(),
+            self.text.replace("PagedAttention", "Replace with the full paper title"),
         ]
         for content in cases:
             with self.subTest(content=content[:100]):
@@ -123,6 +126,58 @@ class BuildTests(unittest.TestCase):
         self.assertNotEqual(first, second)
         self.assertNotIn('src="./app.js"', second)
         self.assertNotIn('src="./data.js"', second)
+
+    def weekly(self, name="2026-W41.yaml", papers=None):
+        import yaml
+        paper = yaml.safe_load(self.text.split("---")[1])
+        path = self.member_dir / name
+        path.write_text(yaml.safe_dump({"papers": papers if papers is not None else [paper]}))
+        return path
+
+    def test_weekly_append_and_migration_keep_existing_dates(self):
+        import yaml
+        old = self.add_note()
+        builder.build(self.root, record=True)
+        original = builder.collect(self.root)[2][0]["added_at"]
+        old.unlink()
+        path = self.weekly()
+        paper = yaml.safe_load(path.read_text())["papers"][0]
+        second = dict(paper, paper_id="arxiv:2205.14135", title="FlashAttention")
+        self.weekly(papers=[paper, second])
+        notes = builder.collect(self.root, now="2027-01-04T18:00:00Z")[2]
+        by_id = {n["paper_id"]: n for n in notes}
+        self.assertEqual(by_id["arxiv:2309.06180"]["added_at"], original)
+        self.assertEqual(by_id["arxiv:2205.14135"]["week"], "2027-W01")
+        self.assertEqual(by_id["arxiv:2205.14135"]["file_week"], "2026-W41")
+
+    def test_duplicate_across_weekly_files_rejected(self):
+        self.weekly()
+        self.weekly("2026-W42.yaml")
+        with self.assertRaisesRegex(ValueError, "duplicate paper"):
+            builder.collect(self.root)
+
+    def test_one_file_per_member_week(self):
+        self.weekly()
+        self.weekly("2026-W41.yml")
+        with self.assertRaisesRegex(ValueError, "one weekly YAML"):
+            builder.collect(self.root)
+
+    def test_weekly_invalid_shape_and_week(self):
+        for filename, content in [
+            ("2026-W99.yaml", "papers: []"),
+            ("2021-W53.yaml", "papers: []"),
+            ("week41.yaml", "papers: []"),
+            ("2026-W41.yaml", "papers: []"),
+            ("2026-W41.yaml", "papers: wrong"),
+            ("2026-W41.yaml", "papers: [null]"),
+        ]:
+            path = self.member_dir / filename
+            path.write_text(content)
+            with self.subTest(filename=filename, content=content):
+                with self.assertRaises(ValueError):
+                    builder.build(self.root, record=True)
+                self.assertEqual(json.loads((self.root / "data/added_at.json").read_text()), {})
+            path.unlink()
 
     def test_invalid_ledger_is_not_silently_overwritten(self):
         (self.root / "data/added_at.json").write_text('{"bad": "2026-01-01"}')

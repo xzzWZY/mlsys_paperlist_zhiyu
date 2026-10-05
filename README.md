@@ -1,13 +1,13 @@
 # example paperlist
 
-A public prototype of a shared reading library for **ML systems and ML algorithms**. Add a Markdown entry, push it, and let GitHub Actions validate and publish the library.
+A public prototype of a shared reading library for **ML systems and ML algorithms**. Add a weekly YAML file, push it, and let GitHub Actions validate and publish the library.
 
-Features: weekly / topic / member views, title and contributor search, combined filters, paper details with multiple contributors, stable first-seen dates, and a rolling four-week contribution average. All content and controls are in English. No database, frontend build tool, or external font service is required.
+Features: weekly / topic / member views, title and contributor search, combined filters, compact tables with multiple contributors and sorting, stable first-seen dates, and a rolling four-week contribution average. All content and controls are in English. No database, frontend build tool, or external font service is required.
 
 ## Start reading or contributing
 
 - [Contribution guide](CONTRIBUTING.md)
-- [Copy the paper template](templates/paper.md)
+- [Copy the weekly template](templates/weekly.yaml)
 - [Configure members, topics, and site identity](config/site.json)
 - Intended public URL **after deployment is enabled**: https://xzzWZY.github.io/mlsys_paperlist_zhiyu/
 
@@ -43,9 +43,9 @@ For a protected-branch lab repository, adapt ledger persistence to a dedicated a
 
 ```text
 config/site.json          Site identity, members, topic vocabulary, weekly target
-entries/<member>/*.md     Real paper entries
-examples/<member>/*.md    Clearly labeled demonstration entries
-templates/paper.md       Submission template
+entries/<member>/*.yaml     Real paper entries
+examples/<member>/*.yaml    Clearly labeled demonstration entries
+templates/weekly.yaml       Weekly submission template
 data/added_at.json        Persistent contribution timestamps
 scripts/build.py         Validation, static build
 site/                    HTML, CSS, and browser JavaScript

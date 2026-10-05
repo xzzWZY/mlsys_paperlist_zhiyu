@@ -2,7 +2,7 @@
 """Validate reading notes and build a portable static site (Python 3.9+)."""
 import argparse
 import hashlib
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 import json
 from pathlib import Path
 import re
@@ -45,7 +45,10 @@ def load_note(path, root, config, ledger, now, example=False):
     match = re.fullmatch(r"---\r?\n(.*?)\r?\n---(?:\r?\n(.*))?", text, re.S)
     if not match:
         raise ValueError("expected YAML front matter between --- lines")
-    meta = yaml.safe_load(match[1])
+    return validate_paper(yaml.safe_load(match[1]), path, root, config, ledger, now, example)
+
+
+def validate_paper(meta, path, root, config, ledger, now, example=False):
     if not isinstance(meta, dict):
         raise ValueError("front matter must be a mapping")
     allowed = {"paper_id", "title", "url", "year", "venue", "topics", "code_url"}
@@ -84,6 +87,27 @@ def load_note(path, root, config, ledger, now, example=False):
                 source=path.relative_to(root).as_posix())
 
 
+def load_weekly(path, root, config, ledger, now, example=False):
+    if not re.fullmatch(r"\d{4}-W\d{2}", path.stem):
+        raise ValueError("weekly filename must be YYYY-Www.yaml, e.g. 2026-W41.yaml")
+    year, week = path.stem.split("-W")
+    date.fromisocalendar(int(year), int(week), 1)
+    batch = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(batch, dict) or set(batch) != {"papers"}:
+        raise ValueError("weekly file must contain only a top-level 'papers' list")
+    if not isinstance(batch["papers"], list) or not batch["papers"]:
+        raise ValueError("papers must be a nonempty list")
+    result = []
+    for index, meta in enumerate(batch["papers"], start=1):
+        try:
+            note = validate_paper(meta, path, root, config, ledger, now, example)
+            note["file_week"] = path.stem
+            result.append(note)
+        except (ValueError, TypeError) as exc:
+            raise ValueError(f"papers[{index}]: {exc}") from exc
+    return result
+
+
 def collect(root, now=None):
     config = json.loads((root / "config/site.json").read_text())
     ZoneInfo(config["timezone"])
@@ -97,16 +121,26 @@ def collect(root, now=None):
     now = now or datetime.now(timezone.utc).isoformat()
     entries, errors, seen = [], [], set()
     for folder, example in (("entries", False), ("examples", True)):
-        for path in sorted((root / folder).rglob("*.md")):
+        batches = set()
+        paths = sorted(p for p in (root / folder).rglob("*") if p.suffix in (".yaml", ".yml", ".md"))
+        for path in paths:
             try:
-                if path.is_symlink() or len(path.relative_to(root / folder).parts) != 2:
-                    raise ValueError("notes must be regular files at <member>/<filename>.md")
-                note = load_note(path, root, config, ledger, now, example)
-                key = (example, note["id"])
-                if key in seen:
-                    raise ValueError("duplicate paper for this member (arXiv versions count as one paper)")
-                seen.add(key)
-                entries.append(note)
+                if path.is_symlink() or not path.is_file() or len(path.relative_to(root / folder).parts) != 2:
+                    raise ValueError("submissions must be regular files at <member>/YYYY-Www.yaml")
+                if path.suffix == ".md":
+                    batch = [load_note(path, root, config, ledger, now, example)]
+                else:
+                    batch_key = (path.parent.name, path.stem)
+                    if batch_key in batches:
+                        raise ValueError("only one weekly YAML file per member and week is allowed")
+                    batches.add(batch_key)
+                    batch = load_weekly(path, root, config, ledger, now, example)
+                for note in batch:
+                    key = (example, note["id"])
+                    if key in seen:
+                        raise ValueError(f"duplicate paper for this member: {note['paper_id']} (including across weeks)")
+                    seen.add(key)
+                    entries.append(note)
             except (ValueError, TypeError, yaml.YAMLError) as exc:
                 errors.append(f"{path.relative_to(root)}: {exc}")
     if errors:

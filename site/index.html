@@ -14,7 +14,7 @@
   <main>
     <section class="intro">
       <div><p class="eyebrow">ML SYSTEMS / ML ALGORITHMS</p><h1 id="site-title">example paperlist</h1><p class="subtitle" id="subtitle"></p></div>
-      <a class="primary" id="contribute-link">+ Add a paper</a>
+      <a class="primary" id="contribute-link">+ Add weekly papers</a>
     </section>
     <section class="stats" aria-label="Library overview" id="stats"></section>
     <section class="workspace">
@@ -37,13 +37,13 @@
           <label><span class="sr-only">Filter by week</span><select id="week"><option value="">All weeks</option></select></label>
           <label><span class="sr-only">Filter by member</span><select id="member"><option value="">All members</option></select></label>
         </div>
+        <label class="sort-control">Sort papers <select id="sort"><option value="newest">Newest added</option><option value="oldest">Oldest added</option><option value="title">Title A–Z</option><option value="year">Publication year ↓</option></select></label>
         <div class="result-line"><p id="result-count" role="status" aria-live="polite"></p><button id="clear" class="text-button">Reset filters</button></div>
         <div id="results"></div>
       </section>
     </section>
   </main>
-  <footer><span>Read thoughtfully. Keep a record. Share what connects.</span><span>Built from Markdown & Git.</span></footer>
-  <dialog id="paper-dialog" aria-labelledby="detail-title"><div class="dialog-top"><span class="eyebrow">PAPER DETAILS</span><button id="close-dialog" aria-label="Close paper details">✕</button></div><div id="detail"></div></dialog>
+  <footer><span>Read thoughtfully. Keep a record. Share what connects.</span><span>Built from YAML & Git.</span></footer>
   <noscript>This interactive library requires JavaScript. The paper entries are also available in the repository.</noscript>
 </body>
 </html>

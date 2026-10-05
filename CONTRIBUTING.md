@@ -1,87 +1,98 @@
-# Add a paper
+# Add your weekly papers
 
-Aim for **two papers per week**. Each paper needs one Markdown file with basic information only. Write titles and metadata in English.
+**One member, one YAML file per week.** Aim for two papers; add more or fewer as needed. All paper information should be in English.
 
-## A complete example
+## Complete example
 
-Create `entries/xzzWZY/pagedattention.md` with this content:
+For October 5–11, 2026 (ISO week 41), create:
 
-```markdown
----
-paper_id: "arxiv:2309.06180"
-title: "Efficient Memory Management for Large Language Model Serving with PagedAttention"
-url: "https://arxiv.org/abs/2309.06180"
-year: 2023
-venue: "arXiv"
-topics:
-  - llm-inference
-  - hardware-systems
----
+```text
+entries/xzzWZY/2026-W41.yaml
 ```
 
-Copy the contents of the block, without the surrounding triple backticks. For another paper, change the filename and metadata. Use your own registered GitHub username in place of `xzzWZY`.
+Paste this content. Unlike the old Markdown format, no `---` delimiters or written notes are needed:
 
-| Field | What to enter |
+```yaml
+papers:
+  - paper_id: "arxiv:2309.06180"
+    title: "Efficient Memory Management for Large Language Model Serving with PagedAttention"
+    url: "https://arxiv.org/abs/2309.06180"
+    year: 2023
+    venue: "arXiv"
+    topics: [llm-inference, hardware-systems]
+
+  - paper_id: "arxiv:2205.14135"
+    title: "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness"
+    url: "https://arxiv.org/abs/2205.14135"
+    year: 2022
+    venue: "arXiv"
+    topics: [compilers-kernels, architectures]
+```
+
+`papers:` starts the list. Each `- paper_id:` starts a new paper. Keep the indentation shown above and use spaces, not tabs. Replace the examples with papers you want to share.
+
+| Field | Meaning |
 | --- | --- |
-| `paper_id` | The arXiv identifier prefixed with `arxiv:`, or a DOI prefixed with `doi:`. |
-| `title` | Full paper title in quotes. |
-| `url` | HTTP(S) link to the paper. |
-| `year` | Publication year as a number, not the submission year. |
-| `topics` | 1–3 exact IDs from [config/site.json](config/site.json), such as `llm-inference` or `compilers-kernels`. |
-| `venue` | Optional conference, journal, or `Preprint`. |
-| `code_url` | Optional HTTP(S) link to the code. |
-
-Keep both `---` lines. Use spaces before topic list items, not tabs. No text is needed below the closing `---`.
+| `paper_id` | Required: `arxiv:<ID>` or `doi:<ID>`. Use the same ID when different members submit the same paper. |
+| `title` | Required: full title in quotes. |
+| `url` | Required: HTTP(S) paper link. |
+| `year` | Required: publication year as a number. |
+| `topics` | Required: 1–3 exact IDs from [config/site.json](config/site.json). |
+| `venue` | Optional: conference, journal, or `Preprint`. |
+| `code_url` | Optional: HTTP(S) code link. |
 
 ## Submit in your browser
 
-1. Open the [repository](https://github.com/xzzWZY/mlsys_paperlist_zhiyu) on the `main` branch.
-2. Select **Add file → Create new file**.
-3. Enter `entries/<your-username>/<paper-name>.md` as the filename and paste your completed metadata.
-4. Click **Commit changes…**, with a message such as `Add PagedAttention`. Commit to `main` if permitted, or open a pull request and have it merged.
-5. Wait for **Actions → Publish paperlist** to finish successfully.
-6. Refresh the [website](https://xzzWZY.github.io/mlsys_paperlist_zhiyu/). Uncheck **Example library** to see real submissions; use **Reset filters** if needed.
+1. Open the [repository](https://github.com/xzzWZY/mlsys_paperlist_zhiyu) on `main`.
+2. Select **Add file → Create new file**. Enter `entries/<your-username>/YYYY-Www.yaml`, replacing the username and ISO year/week. Your username must be registered in [config/site.json](config/site.json); `xzzWZY` is registered already.
+3. Paste the example or [weekly template](templates/weekly.yaml), then fill in your papers.
+4. Click **Commit changes…** and commit to `main`, or open a pull request and merge it after checks pass.
+5. Wait for **Actions → Publish paperlist** to succeed, then refresh the [website](https://xzzWZY.github.io/mlsys_paperlist_zhiyu/). Turn off **Example library** and reset filters to see real contributions.
 
-Your username must first be registered under `members` in [config/site.json](config/site.json). `xzzWZY` is already registered. Ask the maintainer to add other members and provide repository access.
+Already submitted this week? Edit that same YAML file and append another paper to `papers:`. Next week, create a new file, e.g. `2026-W42.yaml`. Do not copy last week's papers into the new file.
 
-## Submit with Git
+## Submit locally
 
-In your local repository, get the latest changes and copy the [template](templates/paper.md) to a new filename:
+From your repository directory:
 
 ```sh
 git pull --rebase origin main
-cp templates/paper.md entries/xzzWZY/my-paper.md
-```
-
-Edit the new file, replace the template values, then commit and push:
-
-```sh
-git add entries/xzzWZY/my-paper.md
-git commit -m "Add paper"
+cp templates/weekly.yaml entries/xzzWZY/2026-W41.yaml
+# Edit the new file. If it already exists, edit it without copying over it.
+git add entries/xzzWZY/2026-W41.yaml
+git commit -m "Add papers for week 41"
 git push origin main
 ```
 
-GitHub Actions checks the format automatically. For optional local validation, follow the [Python setup](README.md#local-preview), then run `.venv/bin/python scripts/build.py --check`.
+Change the filename to the appropriate ISO week. With [Python setup](README.md#local-preview) complete, optionally validate before committing:
 
-## What happens automatically?
+```sh
+.venv/bin/python scripts/build.py --check
+```
 
-- The website displays the title, paper link, topics, and contributor. Paper details also show the publication metadata and contribution dates.
-- The member folder identifies the contributor. Do not add member, date, or week fields.
-- The first successful publishing workflow records the entry's time. This approximates arrival on `main`, rather than the exact push time. Weeks run Monday–Sunday in `America/Chicago`.
-- Edits and filename changes keep the original week when the member and paper ID remain the same. Keep IDs stable; ask the maintainer to migrate a timestamp if an ID needs correction.
-- Each member can submit a paper once. Different members can submit the same paper; the website groups their contributions under its canonical ID. arXiv versions count as one paper. Use the same identifier across members: DOI and arXiv IDs are not automatically cross-matched.
-- Paper totals count unique papers; member totals count submissions. The weekly average covers the current partial week and the previous three weeks, divided by four. The two-paper target is a guideline, not a validation requirement.
-- Examples are separate from real contributions and never count toward member totals.
+## Dates, grouping, and duplicates
 
-## If something goes wrong
+- The filename organizes your weekly submission; it does not override the website's submission timestamp. A late upload appears in the week it is first recorded by the publishing workflow, even if its filename names an earlier week.
+- Weeks run Monday–Sunday in `America/Chicago`. The first successful ingestion time approximates arrival on `main`; it is not an exact push-event timestamp.
+- Each paper has its own persistent timestamp. Appending a paper later gives only that new paper a new timestamp. Editing or migrating an existing paper keeps its date when the member and paper ID stay the same.
+- One member may submit a paper once across all weekly files. arXiv versions count as one paper. Different members may submit the same paper, and the table groups their contributions within the selected week/topic/member group.
+- One weekly file per member is allowed (`.yaml` preferred; `.yml` also accepted). Filenames must use a real ISO week, including two digits, such as `2026-W05.yaml`.
+- Paper totals count unique papers. Member statistics count submissions; the four-week average includes the current partial week and the three preceding weeks. Two per week is a guideline, not a validation requirement.
+- Existing single-paper Markdown files remain readable for compatibility. To migrate, move their metadata into a weekly YAML file and remove the old Markdown file in the same commit. Do not retain both copies. No new Markdown files are needed.
 
-| Problem | Fix |
+## Reading the table
+
+Switch **By week / By topic / By member**, combine search and filters, and use **Sort papers** for newest/oldest added, title, or publication year. Sorting applies within each group. Click a title to read the paper; click a contributor to open the source submission. On narrow screens, scroll the table horizontally.
+
+## Common errors
+
+| Error | Fix |
 | --- | --- |
-| Unknown member | Match the registered username, including capitalization. |
-| Invalid topic | Copy an exact ID from the configuration, not a display label. |
-| Invalid metadata | Keep the `---` lines, quote text values, and enter the year as a number. |
-| Duplicate paper | Edit your existing file instead of creating a second submission. |
-| Paper not visible | Check that it is on `main`, the publish workflow succeeded, examples are off, and filters are reset. |
-| Website displays the README | Select **Settings → Pages → Source → GitHub Actions**, then run **Publish paperlist**. |
+| Unknown member | Match the username registered in `config/site.json`, including case. |
+| Invalid topic | Use exact topic IDs, e.g. `llm-inference`, not display labels. |
+| Invalid YAML | Check indentation and quotes. `papers:` must contain a nonempty list. |
+| Invalid week | Use `YYYY-Www.yaml` with a real ISO week number. |
+| Duplicate paper | Remove the duplicate from this or another weekly file; edit the original entry. |
+| Paper not visible | Check `main`, a successful publish run, example mode, and filters. |
 
-See the [deployment instructions](README.md#enable-public-github-pages) for the maintainer's one-time setup.
+See [deployment setup](README.md#enable-public-github-pages) for the maintainer's one-time configuration.
