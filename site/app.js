@@ -33,11 +33,8 @@ const dateLabel = value => new Date(value).toLocaleDateString("en-US", {month:"s
 let view = "week";
 $("site-title").textContent = config.title;
 document.title = `${config.title} · UIUC-MLSys`;
-$("subtitle").textContent = config.subtitle;
 $("repo-link").href = config.repository;
 $("contribute-link").href = `${config.repository}/blob/main/CONTRIBUTING.md`;
-$("guide-link").href = $("contribute-link").href;
-$("timezone-note").textContent = `Weeks run Monday–Sunday in ${config.timezone}. Aim for ${config.weekly_target} papers per week.`;
 $("examples").checked = !notes.some(n => !n.example);
 const library = () => notes.filter(n => n.example === $("examples").checked);
 function options(id, items) {
@@ -106,22 +103,14 @@ function memberStats(member, all) {
   const recent = new Set(Array.from({length:4}, (_, i) => isoWeek(new Date(today.getTime() - i * 7 * 86400000))));
   const entries = all.filter(n => n.member === member);
   const strip = el("div", "member-stats");
-  for (const [value, label] of [[entries.filter(n => n.week === current).length, "this week"], [(entries.filter(n => recent.has(n.week)).length / 4).toFixed(1), "per week · last 4 weeks"], [config.weekly_target, "weekly goal"]]) {
+  for (const [value, label] of [[entries.filter(n => n.week === current).length, "this week"], [(entries.filter(n => recent.has(n.week)).length / 4).toFixed(1), "/ week (4-week avg)"], [config.weekly_target, "goal / week"]]) {
     const item = el("span"); item.append(el("strong", "", value), el("small", "", label)); strip.append(item);
   }
   return strip;
 }
 function render() {
   const all = library(), query = $("search").value.trim().toLowerCase();
-  const current = isoWeek(localDate(new Date()));
-  $("example-banner").hidden = !$("examples").checked;
-  $("stats").replaceChildren();
-  for (const [value, label] of [[new Set(all.map(n => n.paper_id)).size, "PAPERS IN THE LIBRARY"], [all.filter(n => n.week === current).length, "SUBMISSIONS THIS WEEK"], [new Set(all.flatMap(n => n.topics)).size, "RESEARCH TOPICS"], [$("examples").checked ? new Set(all.map(n => n.member)).size : Object.keys(config.members).length, "READERS"]]) {
-    const stat = el("div", "stat"); stat.append(el("strong", "", value), el("span", "", label)); $("stats").append(stat);
-  }
   const filtered = all.filter(n => (!$("topic").value || n.topics.includes($("topic").value)) && (!$("week").value || n.week === $("week").value) && (!$("member").value || n.member === $("member").value) && (!query || `${n.title} ${n.paper_id} ${n.member_name} ${n.venue || ""}`.toLowerCase().includes(query)));
-  const titles = {week:["THE WEEKLY EDIT", "A little reading, every week."], topic:["FOLLOW A THREAD", "Ideas across research areas."], member:["THE PEOPLE BEHIND THE PAPERS", "A shared reading habit."]};
-  $("view-kicker").textContent = titles[view][0]; $("view-title").textContent = titles[view][1];
   const paperCount = new Set(filtered.map(n => n.paper_id)).size;
   $("result-count").textContent = `${paperCount} ${paperCount === 1 ? "paper" : "papers"} · ${filtered.length} ${filtered.length === 1 ? "submission" : "submissions"}${$("examples").checked ? " · example data" : ""}`;
   document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === view)));
@@ -142,13 +131,13 @@ function render() {
     const papers = new Map();
     for (const note of entries) { if (!papers.has(note.paper_id)) papers.set(note.paper_id, []); papers.get(note.paper_id).push(note); }
     if (papers.size) section.append(paperTable(papers, name));
-    if (!entries.length) section.append(el("p", "note-caption", "No papers submitted yet. Start with the weekly YAML template."));
+    if (!entries.length) section.append(el("p", "note-caption", "No submissions yet."));
     $("results").append(section);
   }
   if (!groups.size) {
     const empty = el("div", "empty");
-    empty.append(el("h3", "", all.length ? "No papers match these filters." : "Your reading library starts here."), el("p", "", all.length ? "Try another keyword or reset the filters." : "Fill in the weekly YAML template and push it to the repository."));
-    if (!all.length) empty.append(link("Open the contribution guide ↗", $("guide-link").href, "paper-link")); $("results").append(empty);
+    empty.append(el("p", "", "No papers found."));
+    if (!all.length) empty.append(link("Add papers ↗", $("contribute-link").href, "paper-link")); $("results").append(empty);
   }
 }
 document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => {view = b.dataset.view; render();}));

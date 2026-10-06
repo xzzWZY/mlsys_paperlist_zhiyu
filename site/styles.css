@@ -585,3 +585,9 @@ aside > .eyebrow, .rhythm { display: none; }
   .library-heading h2 { font-size: 20px; }
   .table-scroll { max-width: 100%; }
 }
+
+/* Minimal toolbar. */
+aside .demo-toggle { margin-left: auto; }
+.intro { padding: 18px 0 12px; }
+.workspace { gap: 10px; }
+.library { min-width: 0; }

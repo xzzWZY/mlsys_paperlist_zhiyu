@@ -10,40 +10,34 @@
   <script defer src="./app.js"></script>
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="#" aria-label="UIUC-MLSys home"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="1" y="1" width="98" height="98" rx="6" fill="#f0f0ef" stroke="#d9dcda"/><path d="M42 25h16v33H42zM9 58h33v16H25v17H9zM58 58h33v33H75V74H58z" fill="#d2a184"/></svg><span>UIUC-MLSys</span></a><a id="repo-link" class="quiet-link">View repository ↗</a></header>
+  <header class="topbar"><a class="brand" href="#" aria-label="UIUC-MLSys home"><svg class="mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="1" y="1" width="98" height="98" rx="6" fill="#f0f0ef" stroke="#d9dcda"/><path d="M42 25h16v33H42zM9 58h33v16H25v17H9zM58 58h33v33H75V74H58z" fill="#d2a184"/></svg><span>UIUC-MLSys</span></a><a id="repo-link" class="quiet-link">GitHub ↗</a></header>
   <main>
     <section class="intro">
-      <div><p class="eyebrow">ML SYSTEMS / ML ALGORITHMS</p><h1 id="site-title">example paperlist</h1><p class="subtitle" id="subtitle"></p></div>
-      <a class="primary" id="contribute-link">+ Add weekly papers</a>
+      <div><h1 id="site-title">example paperlist</h1></div>
+      <a class="primary" id="contribute-link">+ Add papers</a>
     </section>
-    <section class="stats" aria-label="Library overview" id="stats"></section>
     <section class="workspace">
       <aside>
-        <p class="eyebrow">EXPLORE THE LIBRARY</p>
         <nav aria-label="Library views" class="view-nav">
-          <button data-view="week" aria-pressed="true">By week <span>↗</span></button>
-          <button data-view="topic" aria-pressed="false">By topic <span>↗</span></button>
-          <button data-view="member" aria-pressed="false">By member <span>↗</span></button>
+          <button data-view="week" aria-pressed="true">Week</button>
+          <button data-view="topic" aria-pressed="false">Topic</button>
+          <button data-view="member" aria-pressed="false">Member</button>
         </nav>
-        <div class="rhythm"><span class="small-symbol">↗</span><h3>A small weekly habit.</h3><p>Add two papers each week. Build a library worth returning to.</p><a id="guide-link">Read the contribution guide →</a></div>
-        <p class="sidebar-note" id="timezone-note"></p>
+        <label class="demo-toggle"><input type="checkbox" id="examples"> Examples</label>
       </aside>
       <section class="library" aria-label="Paper submissions">
-        <div class="library-heading"><div><p class="eyebrow" id="view-kicker">THE WEEKLY EDIT</p><h2 id="view-title">A little reading, every week.</h2></div><label class="demo-toggle"><input type="checkbox" id="examples"> Example library</label></div>
-        <div class="example-banner" id="example-banner" hidden>Example papers, not personal reading history. Turn off the example library to see real contributions.</div>
         <div class="filters">
-          <label class="search-label"><span class="sr-only">Search papers</span><input id="search" type="search" placeholder="Search titles, paper IDs, or contributors…"></label>
+          <label class="search-label"><span class="sr-only">Search papers</span><input id="search" type="search" placeholder="Search papers…"></label>
           <label><span class="sr-only">Filter by topic</span><select id="topic"><option value="">All topics</option></select></label>
           <label><span class="sr-only">Filter by week</span><select id="week"><option value="">All weeks</option></select></label>
           <label><span class="sr-only">Filter by member</span><select id="member"><option value="">All members</option></select></label>
         </div>
-        <label class="sort-control">Sort papers <select id="sort"><option value="newest">Newest added</option><option value="oldest">Oldest added</option><option value="title">Title A–Z</option><option value="year">Publication year ↓</option></select></label>
-        <div class="result-line"><p id="result-count" role="status" aria-live="polite"></p><button id="clear" class="text-button">Reset filters</button></div>
+        <label class="sort-control">Sort <select id="sort"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="title">Title A–Z</option><option value="year">Year ↓</option></select></label>
+        <div class="result-line"><p id="result-count" role="status" aria-live="polite"></p><button id="clear" class="text-button">Reset</button></div>
         <div id="results"></div>
       </section>
     </section>
   </main>
-  <footer><span>Read thoughtfully. Keep a record. Share what connects.</span><span>Built from YAML & Git.</span></footer>
   <noscript>This interactive library requires JavaScript. The paper entries are also available in the repository.</noscript>
 </body>
 </html>
