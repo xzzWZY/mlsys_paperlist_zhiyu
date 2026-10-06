@@ -90,11 +90,11 @@ def generate(root=ROOT, record=False):
         ('Weekly PR guide — organizers only', 'docs/organizer.md', 'Manage classification, weekly merges, and automatic branches.'),
     ]:
         intro += f'- {link(label, target)} — {description}\n'
-    intro += '\n## Members\n\n'
+    intro += '\n## Members\n\n[Contribution guide](CONTRIBUTING.md)\n\n'
     intro += '- Add papers to your monthly YAML file on the current shared submission branch.\n'
     intro += '- Provide **title, URL, and year**; venue is optional. No topics or individual PRs are needed.\n'
     intro += '- Sync before editing and push to the shared branch, **not `main`**.\n'
-    intro += '\n## Organizers\n\n'
+    intro += '\n## Organizers\n\n[Weekly PR guide — organizers only](docs/organizer.md)\n\n'
     intro += '- Once a week, use AI to assign missing topics, run checks, and open the shared PR.\n'
     intro += '- Review and merge the PR, then confirm the paper indexes update.\n'
     intro += '- Share the next submission branch, created automatically after merge when enabled. The first branch needs manual setup.\n'
