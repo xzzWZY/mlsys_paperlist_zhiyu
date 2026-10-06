@@ -32,7 +32,7 @@ function weekLabel(week) {
 const dateLabel = value => new Date(value).toLocaleDateString("en-US", {month:"short",day:"numeric",year:"numeric",timeZone:config.timezone});
 let view = "week";
 $("site-title").textContent = config.title;
-document.title = `${config.title} · The Reading Room`;
+document.title = `${config.title} · UIUC-MLSys`;
 $("subtitle").textContent = config.subtitle;
 $("repo-link").href = config.repository;
 $("contribute-link").href = `${config.repository}/blob/main/CONTRIBUTING.md`;
