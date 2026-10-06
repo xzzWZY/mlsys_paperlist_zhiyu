@@ -5,9 +5,7 @@ papers:
     url: "https://arxiv.org/abs/2309.06180"
     year: 2023
     venue: "SOSP"
-    topics: [llm-inference]
 
   - title: "Replace with the second paper title"
     url: "https://arxiv.org/abs/2205.14135"
     year: 2022
-    topics: [compilers-kernels]

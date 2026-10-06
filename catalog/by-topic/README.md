@@ -2,7 +2,7 @@
 
 # By topic
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
+[Home](../../README.md) · [All papers](../all-papers.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
 [Architectures (1)](#architectures) · [Compilers &amp; kernels (1)](#compilers-kernels) · [Distributed training (1)](#distributed-training) · [Efficient fine-tuning (1)](#efficient-finetuning) · [Hardware &amp; systems (2)](#hardware-systems) · [LLM inference (2)](#llm-inference) · [Optimization (1)](#optimization) · [Quantization (1)](#quantization)
 

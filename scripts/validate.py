@@ -49,9 +49,9 @@ def validate_paper(meta, path, root, config, ledger, now):
         raise ValueError("year must be an integer between 1900 and 2100")
     if "venue" in meta and not isinstance(meta["venue"], str):
         raise ValueError("venue must be a string")
-    topics = meta.get("topics")
-    if not isinstance(topics, list) or not 1 <= len(topics) <= 3 or any(not isinstance(t, str) or t not in config["topics"] for t in topics):
-        raise ValueError("topics must contain 1–3 IDs from config/paperlist.json")
+    topics = meta.get("topics", [])
+    if not isinstance(topics, list) or not 0 <= len(topics) <= 3 or any(not isinstance(t, str) or t not in config["topics"] for t in topics):
+        raise ValueError("topics must contain 0–3 IDs from config/paperlist.json")
     if len(set(topics)) != len(topics):
         raise ValueError("topics must not contain duplicates")
     if meta["title"].startswith("Replace with"):
@@ -63,7 +63,7 @@ def validate_paper(meta, path, root, config, ledger, now):
     identity = f"{member}/title:{key}"
     added = ledger.get(identity, now)
     timestamp(added)
-    return dict(meta, title_key=key, id=identity, member=member,
+    return dict(meta, topics=topics, title_key=key, id=identity, member=member,
                 member_name=config["members"][member],
                 added_at=added,
                 source=path.relative_to(root).as_posix())

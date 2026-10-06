@@ -40,7 +40,7 @@ def generate(root=ROOT, record=False):
         return os.path.relpath(target, source.parent)
 
     def nav(path):
-        targets = [('All papers', root / 'README.md')] + [(f'By {kind}', base / f'by-{kind}/README.md') for kind in ('month', 'topic')]
+        targets = [('Home', root / 'README.md'), ('All papers', base / 'all-papers.md')] + [(f'By {kind}', base / f'by-{kind}/README.md') for kind in ('month', 'topic')]
         return ' · '.join(link(label, relative(path, target)) for label, target in targets)
 
     # Normalized title identity is global. Time indexes use its first appearance
@@ -59,7 +59,7 @@ def generate(root=ROOT, record=False):
     groups = {kind: defaultdict(list) for kind in ('month', 'topic')}
     for n in records:
         groups['month'][n['month']].append(n)
-        for topic in n['topics']:
+        for topic in n['topics'] or ['uncategorized']:
             groups['topic'][topic].append(n)
     def table(path, entries, provenance=False):
         if not entries:
@@ -67,7 +67,7 @@ def generate(root=ROOT, record=False):
         rows = ['| Paper | Year / venue | Topics |' + (' Submitted by | First added |' if provenance else ''),
                 '| --- | --- | --- |' + (' --- | --- |' if provenance else '')]
         for n in entries:
-            topics = ', '.join(link(config['topics'][t], relative(path, base / 'by-topic/README.md') + f'#{t}') for t in n['topics'])
+            topics = ', '.join(link(config['topics'][t], relative(path, base / 'by-topic/README.md') + f'#{t}') for t in n['topics']) or link('Uncategorized', relative(path, base / 'by-topic/README.md') + '#uncategorized')
             members = ', '.join(link(c['member_name'], relative(path, root / c['source'])) for c in n['contributions'])
             paper = link(n['title'], n['url'])
             codes = sorted({c['code_url'] for c in n['contributions'] if c.get('code_url')})
@@ -78,11 +78,18 @@ def generate(root=ROOT, record=False):
         return '\n'.join(rows)
 
     home = root / 'README.md'
-    intro = f'# {text(config["title"])}\n\n{nav(home)}\n\n'
-    intro += link('Contribute', 'CONTRIBUTING.md') + ' · ' + link('Monthly YAML template', 'templates/monthly.yaml')
-    intro += '\n\nOne file per member per month. Add or edit papers in the same file throughout the month.\n\n'
-    intro += f'## All papers ({len(records)})\n\n' + table(home, records)
+    intro = f'# {text(config["title"])}\n\n'
+    for label, target, description in [
+        ('All papers', 'catalog/all-papers.md', 'Browse the full deduplicated paper list.'),
+        ('By month', 'catalog/by-month/README.md', 'Browse papers by their first-added month.'),
+        ('By topic', 'catalog/by-topic/README.md', 'Browse research areas and uncategorized papers.'),
+        ('Contribute', 'CONTRIBUTING.md', 'Add or update your monthly submission.'),
+        ('YAML template', 'templates/monthly.yaml', 'Copy the submission format.'),
+    ]:
+        intro += f'- {link(label, target)} — {description}\n'
     write(home, intro)
+    all_papers = base / 'all-papers.md'
+    write(all_papers, f'# All papers ({len(records)})\n\n{nav(all_papers)}\n\n' + table(all_papers, records))
     write(base / 'README.md', '# Papers\n\n' + nav(base / 'README.md'))
     for kind, grouping in groups.items():
         listing = base / f'by-{kind}/README.md'
@@ -91,7 +98,7 @@ def generate(root=ROOT, record=False):
         for key in keys:
             if not re.fullmatch(r'[A-Za-z0-9_-]+', key):
                 raise ValueError(f'Unsafe index key: {key}')
-        labels = {key: config['topics'][key] if kind == 'topic' else key for key in keys}
+        labels = {key: ('Uncategorized' if key == 'uncategorized' else config['topics'][key]) if kind == 'topic' else key for key in keys}
         body += ' · '.join(link(f'{labels[key]} ({len(grouping[key])})', f'#{key}') for key in keys) + '\n\n'
         for key in keys:
             entries = sorted(grouping[key], key=lambda n: timestamp(n['added_at']), reverse=True)

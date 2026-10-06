@@ -35,7 +35,7 @@ class IndexTests(unittest.TestCase):
         shutil.copyfile(ROOT / 'CONTRIBUTING.md', self.root / 'CONTRIBUTING.md')
         shutil.copytree(ROOT / 'templates', self.root / 'templates')
         indexer.generate(self.root)
-        home = (self.root / 'README.md').read_text()
+        home = (self.root / 'catalog/all-papers.md').read_text()
         self.assertEqual(home.count('[PagedAttention]'), 1)
         self.assertNotIn('Submitted by', home)
         self.assertNotIn('First added', home)
@@ -90,3 +90,22 @@ class IndexTests(unittest.TestCase):
         indexer.generate(self.root)
         self.assertFalse(old.exists())
         self.assertFalse(member.exists())
+
+    def test_untagged_papers_remain_discoverable(self):
+        paper = yaml.safe_load(self.text.split('---')[1])
+        paper.pop('topics')
+        self.monthly(papers=[paper])
+        indexer.generate(self.root)
+        home = (self.root / 'README.md').read_text()
+        self.assertNotIn('[PagedAttention]', home)
+        self.assertIn('[All papers](catalog/all-papers.md)', home)
+        all_papers = (self.root / 'catalog/all-papers.md').read_text()
+        self.assertIn('[PagedAttention]', all_papers)
+        self.assertIn('Uncategorized', all_papers)
+        topics_path = self.root / 'catalog/by-topic/README.md'
+        self.assertIn('## Uncategorized', topics_path.read_text())
+        paper['topics'] = ['llm-inference']
+        self.monthly(papers=[paper])
+        indexer.generate(self.root)
+        self.assertNotIn('## Uncategorized', topics_path.read_text())
+        self.assertIn('## LLM inference', topics_path.read_text())

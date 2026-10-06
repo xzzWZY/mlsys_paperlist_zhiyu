@@ -2,18 +2,8 @@
 
 # example paperlist
 
-[All papers](README.md) · [By month](catalog/by-month/README.md) · [By topic](catalog/by-topic/README.md)
-
-[Contribute](CONTRIBUTING.md) · [Monthly YAML template](templates/monthly.yaml)
-
-One file per member per month. Add or edit papers in the same file throughout the month.
-
-## All papers (5)
-
-| Paper | Year / venue | Topics |
-| --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](catalog/by-topic/README.md#architectures), [Compilers &amp; kernels](catalog/by-topic/README.md#compilers-kernels) |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](catalog/by-topic/README.md#hardware-systems), [LLM inference](catalog/by-topic/README.md#llm-inference) |
-| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](catalog/by-topic/README.md#efficient-finetuning), [Optimization](catalog/by-topic/README.md#optimization) |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](catalog/by-topic/README.md#llm-inference), [Quantization](catalog/by-topic/README.md#quantization) |
-| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](catalog/by-topic/README.md#distributed-training), [Hardware &amp; systems](catalog/by-topic/README.md#hardware-systems) |
+- [All papers](catalog/all-papers.md) — Browse the full deduplicated paper list.
+- [By month](catalog/by-month/README.md) — Browse papers by their first-added month.
+- [By topic](catalog/by-topic/README.md) — Browse research areas and uncategorized papers.
+- [Contribute](CONTRIBUTING.md) — Add or update your monthly submission.
+- [YAML template](templates/monthly.yaml) — Copy the submission format.
