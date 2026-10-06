@@ -4,56 +4,16 @@
 
 [Home](../../README.md) · [All papers](../all-papers.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-[Architectures (1)](#architectures) · [Compilers &amp; kernels (1)](#compilers-kernels) · [Distributed training (1)](#distributed-training) · [Efficient fine-tuning (1)](#efficient-finetuning) · [Hardware &amp; systems (2)](#hardware-systems) · [LLM inference (2)](#llm-inference) · [Optimization (1)](#optimization) · [Quantization (1)](#quantization)
+[Efficient ML (2)](#efficient-ml) · [LLM inference (2)](#llm-inference) · [Models &amp; agents (1)](#models-agents) · [Systems &amp; hardware (3)](#systems) · [Training &amp; optimization (2)](#training)
 
-<a name="architectures"></a>
+<a name="efficient-ml"></a>
 
-## Architectures
-
-| Paper | Year / venue | Topics |
-| --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](README.md#architectures), [Compilers &amp; kernels](README.md#compilers-kernels) |
-
-[Back to top](#by-topic)
-
-<a name="compilers-kernels"></a>
-
-## Compilers &amp; kernels
+## Efficient ML
 
 | Paper | Year / venue | Topics |
 | --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](README.md#architectures), [Compilers &amp; kernels](README.md#compilers-kernels) |
-
-[Back to top](#by-topic)
-
-<a name="distributed-training"></a>
-
-## Distributed training
-
-| Paper | Year / venue | Topics |
-| --- | --- | --- |
-| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](README.md#distributed-training), [Hardware &amp; systems](README.md#hardware-systems) |
-
-[Back to top](#by-topic)
-
-<a name="efficient-finetuning"></a>
-
-## Efficient fine-tuning
-
-| Paper | Year / venue | Topics |
-| --- | --- | --- |
-| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](README.md#efficient-finetuning), [Optimization](README.md#optimization) |
-
-[Back to top](#by-topic)
-
-<a name="hardware-systems"></a>
-
-## Hardware &amp; systems
-
-| Paper | Year / venue | Topics |
-| --- | --- | --- |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](README.md#hardware-systems), [LLM inference](README.md#llm-inference) |
-| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](README.md#distributed-training), [Hardware &amp; systems](README.md#hardware-systems) |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient ML](README.md#efficient-ml), [Training &amp; optimization](README.md#training) |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [Efficient ML](README.md#efficient-ml), [LLM inference](README.md#llm-inference) |
 
 [Back to top](#by-topic)
 
@@ -63,27 +23,40 @@
 
 | Paper | Year / venue | Topics |
 | --- | --- | --- |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](README.md#hardware-systems), [LLM inference](README.md#llm-inference) |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](README.md#llm-inference), [Quantization](README.md#quantization) |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [LLM inference](README.md#llm-inference), [Systems &amp; hardware](README.md#systems) |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [Efficient ML](README.md#efficient-ml), [LLM inference](README.md#llm-inference) |
 
 [Back to top](#by-topic)
 
-<a name="optimization"></a>
+<a name="models-agents"></a>
 
-## Optimization
+## Models &amp; agents
 
 | Paper | Year / venue | Topics |
 | --- | --- | --- |
-| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](README.md#efficient-finetuning), [Optimization](README.md#optimization) |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Models &amp; agents](README.md#models-agents), [Systems &amp; hardware](README.md#systems) |
 
 [Back to top](#by-topic)
 
-<a name="quantization"></a>
+<a name="systems"></a>
 
-## Quantization
+## Systems &amp; hardware
 
 | Paper | Year / venue | Topics |
 | --- | --- | --- |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](README.md#llm-inference), [Quantization](README.md#quantization) |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Models &amp; agents](README.md#models-agents), [Systems &amp; hardware](README.md#systems) |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [LLM inference](README.md#llm-inference), [Systems &amp; hardware](README.md#systems) |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Systems &amp; hardware](README.md#systems), [Training &amp; optimization](README.md#training) |
+
+[Back to top](#by-topic)
+
+<a name="training"></a>
+
+## Training &amp; optimization
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient ML](README.md#efficient-ml), [Training &amp; optimization](README.md#training) |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Systems &amp; hardware](README.md#systems), [Training &amp; optimization](README.md#training) |
 
 [Back to top](#by-topic)

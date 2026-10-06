@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate monthly paper submissions (Python 3.9+)."""
+import argparse
 from datetime import date, datetime, timezone
 import json
 from pathlib import Path
@@ -90,7 +91,7 @@ def load_monthly(path, root, config, ledger, now):
     return result
 
 
-def collect(root, now=None):
+def collect(root, now=None, require_topics=False):
     config = json.loads((root / "config/paperlist.json").read_text())
     ZoneInfo(config["timezone"])
     ledger = json.loads((root / "data/added_at.json").read_text())
@@ -114,6 +115,8 @@ def collect(root, now=None):
                 raise ValueError("only one monthly YAML file per member and month is allowed")
             batches.add(batch_key)
             for note in load_monthly(path, root, config, ledger, now):
+                if require_topics and not note["topics"]:
+                    raise ValueError(f"missing topics for: {note['title']}; classify before opening the weekly PR")
                 if note["id"] in seen:
                     raise ValueError(f"duplicate paper for this member: {note['title']} (including across months)")
                 seen.add(note["id"])
@@ -126,8 +129,11 @@ def collect(root, now=None):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--require-topics", action="store_true", help="Require classification before a weekly PR")
+    args = parser.parse_args()
     try:
-        print(f"Validated {len(collect(ROOT)[2])} paper submissions.")
+        print(f"Validated {len(collect(ROOT, require_topics=args.require_topics)[2])} paper submissions.")
     except (ValueError, KeyError, OSError) as exc:
         print(f"Validation failed: {exc}", file=sys.stderr)
         sys.exit(1)

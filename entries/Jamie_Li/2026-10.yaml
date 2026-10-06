@@ -5,4 +5,4 @@ papers:
   venue: SOSP
   topics:
   - llm-inference
-  - hardware-systems
+  - systems

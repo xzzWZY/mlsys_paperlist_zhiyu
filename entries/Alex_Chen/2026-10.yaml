@@ -4,12 +4,12 @@ papers:
   year: 2022
   venue: NeurIPS
   topics:
-  - compilers-kernels
-  - architectures
+  - systems
+  - models-agents
 - title: Efficient Memory Management for Large Language Model Serving with PagedAttention
   url: https://arxiv.org/abs/2309.06180
   year: 2023
   venue: SOSP
   topics:
   - llm-inference
-  - hardware-systems
+  - systems

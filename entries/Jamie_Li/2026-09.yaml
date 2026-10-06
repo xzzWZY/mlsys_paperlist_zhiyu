@@ -4,12 +4,12 @@ papers:
   year: 2022
   venue: ICLR
   topics:
-  - efficient-finetuning
-  - optimization
+  - efficient-ml
+  - training
 - title: 'GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers'
   url: https://arxiv.org/abs/2210.17323
   year: 2023
   venue: ICLR
   topics:
-  - quantization
+  - efficient-ml
   - llm-inference

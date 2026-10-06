@@ -4,5 +4,5 @@ papers:
   year: 2020
   venue: SC
   topics:
-  - distributed-training
-  - hardware-systems
+  - training
+  - systems

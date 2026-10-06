@@ -70,6 +70,22 @@ class ValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             builder.title_key("...!")
 
+    def test_weekly_pr_requires_topics_but_drafts_allow_missing_topics(self):
+        import yaml
+        paper = yaml.safe_load(self.text.split("---")[1])
+        for missing in (True, False):
+            candidate = dict(paper)
+            if missing:
+                candidate.pop("topics")
+            else:
+                candidate["topics"] = []
+            self.monthly(papers=[candidate])
+            self.assertEqual(len(builder.collect(self.root)[2]), 1)
+            with self.assertRaisesRegex(ValueError, "missing topics for: PagedAttention"):
+                builder.collect(self.root, require_topics=True)
+        self.monthly(papers=[paper])
+        self.assertEqual(len(builder.collect(self.root, require_topics=True)[2]), 1)
+
     def test_legacy_markdown_is_rejected(self):
         (self.member_dir / "paper.md").write_text(self.text)
         with self.assertRaisesRegex(ValueError, "only monthly YAML"):

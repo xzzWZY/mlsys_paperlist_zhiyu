@@ -12,8 +12,8 @@
 
 | Paper | Year / venue | Topics | Submitted by | First added |
 | --- | --- | --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](../by-topic/README.md#architectures), [Compilers &amp; kernels](../by-topic/README.md#compilers-kernels) | [Alex Chen](../../entries/Alex_Chen/2026-10.yaml) | 2026-10-05 |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](../by-topic/README.md#hardware-systems), [LLM inference](../by-topic/README.md#llm-inference) | [Alex Chen](../../entries/Alex_Chen/2026-10.yaml), [Jamie Li](../../entries/Jamie_Li/2026-10.yaml) | 2026-10-05 |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Models &amp; agents](../by-topic/README.md#models-agents), [Systems &amp; hardware](../by-topic/README.md#systems) | [Alex Chen](../../entries/Alex_Chen/2026-10.yaml) | 2026-10-05 |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [LLM inference](../by-topic/README.md#llm-inference), [Systems &amp; hardware](../by-topic/README.md#systems) | [Alex Chen](../../entries/Alex_Chen/2026-10.yaml), [Jamie Li](../../entries/Jamie_Li/2026-10.yaml) | 2026-10-05 |
 
 [Back to top](#by-month)
 
@@ -23,8 +23,8 @@
 
 | Paper | Year / venue | Topics | Submitted by | First added |
 | --- | --- | --- | --- | --- |
-| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](../by-topic/README.md#efficient-finetuning), [Optimization](../by-topic/README.md#optimization) | [Jamie Li](../../entries/Jamie_Li/2026-09.yaml) | 2026-09-29 |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](../by-topic/README.md#llm-inference), [Quantization](../by-topic/README.md#quantization) | [Jamie Li](../../entries/Jamie_Li/2026-09.yaml) | 2026-09-29 |
-| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](../by-topic/README.md#distributed-training), [Hardware &amp; systems](../by-topic/README.md#hardware-systems) | [Alex Chen](../../entries/Alex_Chen/2026-09.yaml) | 2026-09-23 |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient ML](../by-topic/README.md#efficient-ml), [Training &amp; optimization](../by-topic/README.md#training) | [Jamie Li](../../entries/Jamie_Li/2026-09.yaml) | 2026-09-29 |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [Efficient ML](../by-topic/README.md#efficient-ml), [LLM inference](../by-topic/README.md#llm-inference) | [Jamie Li](../../entries/Jamie_Li/2026-09.yaml) | 2026-09-29 |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Systems &amp; hardware](../by-topic/README.md#systems), [Training &amp; optimization](../by-topic/README.md#training) | [Alex Chen](../../entries/Alex_Chen/2026-09.yaml) | 2026-09-23 |
 
 [Back to top](#by-month)

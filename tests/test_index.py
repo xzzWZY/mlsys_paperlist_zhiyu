@@ -27,7 +27,7 @@ class IndexTests(unittest.TestCase):
         source = self.member_dir / '2026-10.yaml'
         other = self.root / 'entries/reader-b/2026-11.yaml'
         other.parent.mkdir(parents=True)
-        other.write_text(source.read_text().replace("llm-inference", "quantization").replace("PagedAttention", "PAGEDATTENTION!").replace("https://arxiv.org/abs/2309.06180", "https://example.org/paper.pdf"))
+        other.write_text(source.read_text().replace("llm-inference", "efficient-ml").replace("PagedAttention", "PAGEDATTENTION!").replace("https://arxiv.org/abs/2309.06180", "https://example.org/paper.pdf"))
         (self.root / 'data/added_at.json').write_text(json.dumps({
             'Zhiyu_Wu/title:pagedattention': '2026-10-05T16:00:00Z',
             'reader-b/title:pagedattention': '2026-11-02T16:00:00Z',
