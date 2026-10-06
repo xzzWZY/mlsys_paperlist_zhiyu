@@ -527,8 +527,8 @@ dialog::backdrop {
     font-size:10px;
   }
   .brand {
-    font-size:9px;
-    letter-spacing:1px;
+    font-size:18px;
+    letter-spacing:-.3px;
   }
   dialog {
     padding:23px;
