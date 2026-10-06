@@ -70,6 +70,22 @@ class ValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             builder.title_key("...!")
 
+    def test_all_spacing_and_punctuation_variants_match(self):
+        variants = ["FlashAttention", "FLASH ATTENTION", "Flash-Attention", "Flash:Attention!",
+                    " Flash\tAttention\n", "ＦｌａｓｈＡｔｔｅｎｔｉｏｎ", "Flash\u200bAttention",
+                    "Flash\u00a0Attention", "‘Flash’—Attention。"]
+        for title in variants:
+            with self.subTest(title=title):
+                self.assertEqual(builder.title_key(title), "flashattention")
+        self.assertNotEqual(builder.title_key("Model+"), builder.title_key("Model"))
+
+    def test_ledger_migration_keeps_earliest_date(self):
+        ledger = builder.normalize_ledger({
+            "Zhiyu_Wu/title:flash attention": "2026-10-01T12:00:00Z",
+            "Zhiyu_Wu/title:flashattention": "2026-10-05T12:00:00Z",
+        })
+        self.assertEqual(ledger, {"Zhiyu_Wu/title:flashattention": "2026-10-01T12:00:00Z"})
+
     def test_weekly_pr_requires_topics_but_drafts_allow_missing_topics(self):
         import yaml
         paper = yaml.safe_load(self.text.split("---")[1])

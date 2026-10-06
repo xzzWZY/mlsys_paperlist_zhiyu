@@ -15,4 +15,4 @@ papers:
 
 Members do not need to provide topics. The organizer calls AI to classify papers, runs checks, and merges one shared PR each week. The next submission branch is then created automatically when the feature is enabled. If no branch exists, contact the organizer.
 
-Copy the full paper title: matching titles are deduplicated across members. Edit your existing entry instead of submitting it again. Do not edit generated indexes.
+Copy the full paper title: title matching ignores case, all whitespace, punctuation, and invisible formatting characters (including full-width variants). Matching titles are deduplicated across members; meaningful symbols such as `+` remain distinct. Edit your existing entry instead of submitting it again. Do not edit generated indexes.

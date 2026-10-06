@@ -1,8 +1,8 @@
 {
-  "Alex_Chen/title:efficient memory management for large language model serving with pagedattention": "2026-10-05T16:00:00Z",
-  "Alex_Chen/title:flashattention fast and memory efficient exact attention with io awareness": "2026-10-05T16:00:00Z",
-  "Alex_Chen/title:zero memory optimizations toward training trillion parameter models": "2026-09-23T16:00:00Z",
-  "Jamie_Li/title:efficient memory management for large language model serving with pagedattention": "2026-10-05T16:00:00Z",
-  "Jamie_Li/title:gptq accurate post training quantization for generative pre trained transformers": "2026-09-29T16:00:00Z",
-  "Jamie_Li/title:lora low rank adaptation of large language models": "2026-09-29T16:00:00Z"
+  "Alex_Chen/title:efficientmemorymanagementforlargelanguagemodelservingwithpagedattention": "2026-10-05T16:00:00Z",
+  "Alex_Chen/title:flashattentionfastandmemoryefficientexactattentionwithioawareness": "2026-10-05T16:00:00Z",
+  "Alex_Chen/title:zeromemoryoptimizationstowardtrainingtrillionparametermodels": "2026-09-23T16:00:00Z",
+  "Jamie_Li/title:efficientmemorymanagementforlargelanguagemodelservingwithpagedattention": "2026-10-05T16:00:00Z",
+  "Jamie_Li/title:gptqaccurateposttrainingquantizationforgenerativepretrainedtransformers": "2026-09-29T16:00:00Z",
+  "Jamie_Li/title:loralowrankadaptationoflargelanguagemodels": "2026-09-29T16:00:00Z"
 }

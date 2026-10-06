@@ -16,10 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def title_key(value):
-    """Match titles by Unicode-normalized words, retaining meaningful symbols."""
+    """Ignore case, whitespace, punctuation and invisible formatting in titles."""
     value = unicodedata.normalize("NFKC", value).casefold()
-    value = "".join(" " if unicodedata.category(c).startswith("P") else c for c in value)
-    value = " ".join(value.split())
+    value = "".join(c for c in value if not c.isspace()
+                    and not unicodedata.category(c).startswith("P")
+                    and unicodedata.category(c) != "Cf")
     if not any(c.isalnum() for c in value):
         raise ValueError("title must contain letters or numbers")
     return value
@@ -32,6 +33,18 @@ def timestamp(value):
     if result.tzinfo is None:
         raise ValueError("timestamp must include a timezone")
     return result
+
+
+def normalize_ledger(ledger):
+    """Preserve earliest dates when an older title key normalizes differently."""
+    normalized = {}
+    for identity, added in ledger.items():
+        timestamp(added)
+        member, separator, title = identity.partition("/title:")
+        key = f"{member}/title:{title_key(title)}" if separator else identity
+        if key not in normalized or timestamp(added) < timestamp(normalized[key]):
+            normalized[key] = added
+    return normalized
 
 
 def validate_paper(meta, path, root, config, ledger, now):
@@ -97,8 +110,7 @@ def collect(root, now=None, require_topics=False):
     ledger = json.loads((root / "data/added_at.json").read_text())
     if not isinstance(ledger, dict):
         raise ValueError("data/added_at.json must be an object")
-    for value in ledger.values():
-        timestamp(value)
+    ledger = normalize_ledger(ledger)
     now = now or datetime.now(timezone.utc).isoformat()
     entries, errors, seen = [], [], set()
     batches = set()
