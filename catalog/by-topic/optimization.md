@@ -2,8 +2,8 @@
 
 # Optimization
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By week](../by-week/README.md) · [By topic](README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-| Paper | Year / venue | Topics | Submitted by | First added |
-| --- | --- | --- | --- | --- |
-| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2021 arXiv | [Efficient fine-tuning](efficient-finetuning.md), [Optimization](optimization.md) | [Member B](../../entries/demo-reader-2/2026-09.yaml) | 2026-09-29 |
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](efficient-finetuning.md), [Optimization](optimization.md) |

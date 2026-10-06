@@ -2,8 +2,8 @@
 
 # Distributed training
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By week](../by-week/README.md) · [By topic](README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-| Paper | Year / venue | Topics | Submitted by | First added |
-| --- | --- | --- | --- | --- |
-| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2019 arXiv | [Distributed training](distributed-training.md), [Hardware &amp; systems](hardware-systems.md) | [Member A](../../entries/demo-reader/2026-09.yaml) | 2026-09-23 |
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](distributed-training.md), [Hardware &amp; systems](hardware-systems.md) |

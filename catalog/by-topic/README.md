@@ -2,7 +2,7 @@
 
 # By topic
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By week](../by-week/README.md) · [By topic](README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
 - [Architectures](architectures.md) (1)
 - [Compilers &amp; kernels](compilers-kernels.md) (1)

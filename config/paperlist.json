@@ -1,13 +1,10 @@
 {
   "title": "example paperlist",
-  "subtitle": "A paper library for machine learning systems and algorithms.",
-  "repository": "https://github.com/xzzWZY/mlsys_paperlist_zhiyu",
   "timezone": "America/Chicago",
-  "weekly_target": 2,
   "members": {
-    "xzzWZY": "Zhiyu Wu",
-    "demo-reader": "Member A",
-    "demo-reader-2": "Member B"
+    "Zhiyu_Wu": "Zhiyu Wu",
+    "Alex_Chen": "Alex Chen",
+    "Jamie_Li": "Jamie Li"
   },
   "topics": {
     "llm-inference": "LLM inference",

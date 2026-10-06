@@ -3,7 +3,7 @@ papers:
   title: 'FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness'
   url: https://arxiv.org/abs/2205.14135
   year: 2022
-  venue: arXiv
+  venue: NeurIPS
   topics:
   - compilers-kernels
   - architectures
@@ -11,7 +11,7 @@ papers:
   title: Efficient Memory Management for Large Language Model Serving with PagedAttention
   url: https://arxiv.org/abs/2309.06180
   year: 2023
-  venue: arXiv
+  venue: SOSP
   topics:
   - llm-inference
   - hardware-systems

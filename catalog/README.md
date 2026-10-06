@@ -2,4 +2,4 @@
 
 # Papers
 
-[All papers](../README.md) · [By month](by-month/README.md) · [By week](by-week/README.md) · [By topic](by-topic/README.md) · [By member](by-member/README.md)
+[All papers](../README.md) · [By month](by-month/README.md) · [By topic](by-topic/README.md)

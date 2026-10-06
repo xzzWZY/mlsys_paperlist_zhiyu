@@ -1,11 +1,11 @@
-# Copy to entries/<your-username>/YYYY-MM.yaml.
+# Copy to entries/First_Last/YYYY-MM.yaml.
 # Replace the paper information. Add another list item for each paper.
 papers:
   - paper_id: "arxiv:2309.06180"
     title: "Replace with the full paper title"
     url: "https://arxiv.org/abs/2309.06180"
     year: 2023
-    venue: "Preprint"
+    venue: "SOSP"
     topics: [llm-inference]
 
   - paper_id: "arxiv:2205.14135"

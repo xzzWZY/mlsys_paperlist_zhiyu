@@ -2,9 +2,9 @@
 
 # LLM inference
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By week](../by-week/README.md) · [By topic](README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-| Paper | Year / venue | Topics | Submitted by | First added |
-| --- | --- | --- | --- | --- |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 arXiv | [Hardware &amp; systems](hardware-systems.md), [LLM inference](llm-inference.md) | [Member A](../../entries/demo-reader/2026-10.yaml), [Member B](../../entries/demo-reader-2/2026-10.yaml) | 2026-10-05 |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2022 arXiv | [LLM inference](llm-inference.md), [Quantization](quantization.md) | [Member B](../../entries/demo-reader-2/2026-09.yaml) | 2026-09-29 |
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](hardware-systems.md), [LLM inference](llm-inference.md) |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](llm-inference.md), [Quantization](quantization.md) |

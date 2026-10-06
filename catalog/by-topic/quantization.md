@@ -2,8 +2,8 @@
 
 # Quantization
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By week](../by-week/README.md) · [By topic](README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-| Paper | Year / venue | Topics | Submitted by | First added |
-| --- | --- | --- | --- | --- |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2022 arXiv | [LLM inference](llm-inference.md), [Quantization](quantization.md) | [Member B](../../entries/demo-reader-2/2026-09.yaml) | 2026-09-29 |
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](llm-inference.md), [Quantization](quantization.md) |

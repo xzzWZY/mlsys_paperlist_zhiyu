@@ -3,7 +3,7 @@ papers:
   title: Efficient Memory Management for Large Language Model Serving with PagedAttention
   url: https://arxiv.org/abs/2309.06180
   year: 2023
-  venue: arXiv
+  venue: SOSP
   topics:
   - llm-inference
   - hardware-systems

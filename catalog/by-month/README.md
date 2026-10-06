@@ -2,7 +2,7 @@
 
 # By month
 
-[All papers](../../README.md) · [By month](README.md) · [By week](../by-week/README.md) · [By topic](../by-topic/README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](README.md) · [By topic](../by-topic/README.md)
 
 - [2026-10](2026-10.md) (2)
 - [2026-09](2026-09.md) (3)

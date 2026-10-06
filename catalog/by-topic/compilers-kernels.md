@@ -2,8 +2,8 @@
 
 # Compilers &amp; kernels
 
-[All papers](../../README.md) · [By month](../by-month/README.md) · [By week](../by-week/README.md) · [By topic](README.md) · [By member](../by-member/README.md)
+[All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-| Paper | Year / venue | Topics | Submitted by | First added |
-| --- | --- | --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 arXiv | [Architectures](architectures.md), [Compilers &amp; kernels](compilers-kernels.md) | [Member A](../../entries/demo-reader/2026-10.yaml) | 2026-10-05 |
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](architectures.md), [Compilers &amp; kernels](compilers-kernels.md) |
