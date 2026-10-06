@@ -1,0 +1,1 @@
+Follow the repository guidance in `AGENTS.md`. When a member asks to classify paper topics, read and follow `docs/classify-topics.md`; do not classify automatically. Use a working branch and a reviewed pull request for submissions and classification. Preserve existing nonempty tags unless explicitly asked to retag.
