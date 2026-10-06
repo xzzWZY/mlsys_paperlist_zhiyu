@@ -1,4 +1,12 @@
 papers:
+- paper_id: arxiv:2205.14135
+  title: 'FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness'
+  url: https://arxiv.org/abs/2205.14135
+  year: 2022
+  venue: arXiv
+  topics:
+  - compilers-kernels
+  - architectures
 - paper_id: arxiv:2309.06180
   title: Efficient Memory Management for Large Language Model Serving with PagedAttention
   url: https://arxiv.org/abs/2309.06180
@@ -7,4 +15,3 @@ papers:
   topics:
   - llm-inference
   - hardware-systems
-  example_added_at: '2026-10-05T16:00:00Z'

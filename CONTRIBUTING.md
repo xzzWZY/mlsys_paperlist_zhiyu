@@ -1,16 +1,8 @@
-# Add your weekly papers
+# Contribute
 
-**One member, one YAML file per week.** Aim for two papers; add more or fewer as needed. All paper information should be in English.
+**One YAML file per member per month**, e.g. `entries/xzzWZY/2026-10.yaml`. Add or edit papers in the same file as often as you like during that month. Aim for about two papers per week.
 
-## Complete example
-
-For October 5–11, 2026 (ISO week 41), create:
-
-```text
-entries/xzzWZY/2026-W41.yaml
-```
-
-Paste this content. Unlike the old Markdown format, no `---` delimiters or written notes are needed:
+## Format
 
 ```yaml
 papers:
@@ -25,76 +17,40 @@ papers:
     title: "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness"
     url: "https://arxiv.org/abs/2205.14135"
     year: 2022
-    venue: "arXiv"
     topics: [compilers-kernels, architectures]
 ```
 
-`papers:` starts the list. Each `- paper_id:` starts a new paper. Keep the indentation shown above and use spaces, not tabs. Replace the examples with papers you want to share.
+`venue` and `code_url` are optional. Other fields are required. Choose 1–3 topic IDs from [config/site.json](config/site.json). Use spaces for indentation. No summaries or notes are needed.
 
-| Field | Meaning |
-| --- | --- |
-| `paper_id` | Required: `arxiv:<ID>` or `doi:<ID>`. Use the same ID when different members submit the same paper. |
-| `title` | Required: full title in quotes. |
-| `url` | Required: HTTP(S) paper link. |
-| `year` | Required: publication year as a number. |
-| `topics` | Required: 1–3 exact IDs from [config/site.json](config/site.json). |
-| `venue` | Optional: conference, journal, or `Preprint`. |
-| `code_url` | Optional: HTTP(S) code link. |
+## Submit or update
 
-## Submit in your browser
+1. Open `entries/<your-username>/YYYY-MM.yaml` on GitHub. Create it using [the template](templates/monthly.yaml) if it does not exist; otherwise edit that file.
+2. Append a new `- paper_id:` item for another paper, or edit an existing item to correct its metadata.
+3. Commit to `main`, or merge a pull request. **Update paper indexes** updates the homepage and category pages automatically.
 
-1. Open the [repository](https://github.com/xzzWZY/mlsys_paperlist_zhiyu) on `main`.
-2. Select **Add file → Create new file**. Enter `entries/<your-username>/YYYY-Www.yaml`, replacing the username and ISO year/week. Your username must be registered in [config/site.json](config/site.json); `xzzWZY` is registered already.
-3. Paste the example or [weekly template](templates/weekly.yaml), then fill in your papers.
-4. Click **Commit changes…** and commit to `main`, or open a pull request and merge it after checks pass.
-5. Wait for **Actions → Update paper indexes** to succeed, then open the [paper index](catalog/README.md). Examples have their own [separate index](catalog/examples/README.md).
+Your username must be registered in `config/site.json`. Next month, create a new file; do not copy previous papers into it. A monthly file may contain any positive number of papers. `.yaml` and `.yml` are supported, but use only one file per member per month.
 
-Already submitted this week? Edit that same YAML file and append another paper to `papers:`. Next week, create a new file, e.g. `2026-W42.yaml`. Do not copy last week's papers into the new file.
+## Deduplication
 
-## Submit locally
+- **All papers:** one row per canonical paper ID, with all contributing members and their topics combined.
+- **By month / week:** a paper appears only in its earliest recorded period across all members. Later submissions by other members do not repeat it in later time groups.
+- **By topic:** one row per paper in each matching topic. A multi-topic paper is discoverable under each of its topics.
+- **By member:** each member's submitted papers appear in their own list, with their own dates and topics.
+- A member cannot submit the same paper twice, including across monthly files. Edit the existing entry instead.
 
-From your repository directory:
+arXiv IDs are case insensitive and version suffixes are ignored. DOI IDs are case insensitive. Use a consistent ID: the system does not automatically infer that an arXiv ID and a DOI refer to the same paper.
 
-```sh
-git pull --rebase origin main
-cp templates/weekly.yaml entries/xzzWZY/2026-W41.yaml
-# Edit the new file. If it already exists, edit it without copying over it.
-git add entries/xzzWZY/2026-W41.yaml
-git commit -m "Add papers for week 41"
-git push origin main
-```
+## Dates
 
-Change the filename to the appropriate ISO week. With [Python setup](README.md#local-checks) complete, optionally validate before committing:
+The filename organizes your monthly submissions. Index dates come from the first successful ingestion in `America/Chicago`, not the filename or publication year. Adding a paper later timestamps only that new contribution; editing or moving an existing contribution keeps its date as long as its member and paper ID stay the same. Month/week indexes use the earliest contribution to each paper.
+
+## Local validation
 
 ```sh
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 .venv/bin/python scripts/build.py --check
+.venv/bin/python -m unittest discover -s tests -q
 ```
 
-## Dates, grouping, and duplicates
-
-- The filename organizes your weekly submission; it does not override the index's submission timestamp. A late upload appears in the week it is first recorded by the index workflow, even if its filename names an earlier week.
-- Weeks run Monday–Sunday in `America/Chicago`. The first successful ingestion time approximates arrival on `main`; it is not an exact push-event timestamp.
-- Each paper has its own persistent timestamp. Appending a paper later gives only that new paper a new timestamp. Editing or migrating an existing paper keeps its date when the member and paper ID stay the same.
-- One member may submit a paper once across all weekly files. arXiv versions count as one paper. Different members may submit the same paper, and the index groups their contributions within the selected week/topic/member group.
-- One weekly file per member is allowed (`.yaml` preferred; `.yml` also accepted). Filenames must use a real ISO week, including two digits, such as `2026-W05.yaml`.
-- Paper totals count unique papers. Member statistics count submissions; the four-week average includes the current partial week and the three preceding weeks. Two per week is a guideline, not a validation requirement.
-- Existing single-paper Markdown files remain readable for compatibility. To migrate, move their metadata into a weekly YAML file and remove the old Markdown file in the same commit. Do not retain both copies. No new Markdown files are needed.
-
-## Browse and search in GitHub
-
-Open [All papers](catalog/README.md), [By week](catalog/by-week/README.md), [By topic](catalog/by-topic/README.md), or [By member](catalog/by-member/README.md). Click a paper title for the original paper, or YAML for its source. Topic, member, and week cells link to related index pages.
-
-Use browser Find for a page, or [repository search instructions](README.md#search) to search titles and metadata across weekly submissions. GitHub's Markdown view does not provide the old website's dropdown filters or custom sorting.
-
-## Common errors
-
-| Error | Fix |
-| --- | --- |
-| Unknown member | Match the username registered in `config/site.json`, including case. |
-| Invalid topic | Use exact topic IDs, e.g. `llm-inference`, not display labels. |
-| Invalid YAML | Check indentation and quotes. `papers:` must contain a nonempty list. |
-| Invalid week | Use `YYYY-Www.yaml` with a real ISO week number. |
-| Duplicate paper | Remove the duplicate from this or another weekly file; edit the original entry. |
-| Paper not visible | Check `main` and a successful index workflow run, then reopen the real paper index. |
-
-See [maintainer setup](README.md#maintainer-setup) for the maintainer's one-time configuration.
+The homepage and `catalog/` are generated; edit YAML instead. The Actions bot needs permission to commit to `main`. If branch rules prevent that, include `python scripts/index.py --record` outputs in a reviewed PR. No Pages deployment is used.

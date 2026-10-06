@@ -32,12 +32,12 @@ class BuildTests(unittest.TestCase):
         path.write_text(text or self.text)
         return path
 
-    def test_empty_library_and_examples_are_valid(self):
+    def test_empty_library_and_demo_entries_are_valid(self):
         self.assertEqual(builder.collect(self.root)[2], [])
-        shutil.copytree(ROOT / "examples", self.root / "examples")
+        shutil.copytree(ROOT / "entries", self.root / "entries", dirs_exist_ok=True)
         notes = builder.collect(self.root)[2]
         self.assertEqual(len(notes), 6)
-        self.assertTrue(all(n["example"] for n in notes))
+        self.assertTrue(all(not n["example"] for n in notes))
 
     def test_week_uses_chicago_and_iso_year(self):
         self.assertEqual(builder.week_of("2026-10-05T02:00:00Z", "America/Chicago"), "2026-W40")
@@ -127,49 +127,49 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn('src="./app.js"', second)
         self.assertNotIn('src="./data.js"', second)
 
-    def weekly(self, name="2026-W41.yaml", papers=None):
+    def monthly(self, name="2026-10.yaml", papers=None):
         import yaml
         paper = yaml.safe_load(self.text.split("---")[1])
         path = self.member_dir / name
         path.write_text(yaml.safe_dump({"papers": papers if papers is not None else [paper]}))
         return path
 
-    def test_weekly_append_and_migration_keep_existing_dates(self):
+    def test_monthly_append_and_migration_keep_existing_dates(self):
         import yaml
         old = self.add_note()
         builder.build(self.root, record=True)
         original = builder.collect(self.root)[2][0]["added_at"]
         old.unlink()
-        path = self.weekly()
+        path = self.monthly()
         paper = yaml.safe_load(path.read_text())["papers"][0]
         second = dict(paper, paper_id="arxiv:2205.14135", title="FlashAttention")
-        self.weekly(papers=[paper, second])
+        self.monthly(papers=[paper, second])
         notes = builder.collect(self.root, now="2027-01-04T18:00:00Z")[2]
         by_id = {n["paper_id"]: n for n in notes}
         self.assertEqual(by_id["arxiv:2309.06180"]["added_at"], original)
         self.assertEqual(by_id["arxiv:2205.14135"]["week"], "2027-W01")
-        self.assertEqual(by_id["arxiv:2205.14135"]["file_week"], "2026-W41")
+        self.assertEqual(by_id["arxiv:2205.14135"]["file_month"], "2026-10")
 
-    def test_duplicate_across_weekly_files_rejected(self):
-        self.weekly()
-        self.weekly("2026-W42.yaml")
+    def test_duplicate_across_monthly_files_rejected(self):
+        self.monthly()
+        self.monthly("2026-11.yaml")
         with self.assertRaisesRegex(ValueError, "duplicate paper"):
             builder.collect(self.root)
 
     def test_one_file_per_member_week(self):
-        self.weekly()
-        self.weekly("2026-W41.yml")
-        with self.assertRaisesRegex(ValueError, "one weekly YAML"):
+        self.monthly()
+        self.monthly("2026-10.yml")
+        with self.assertRaisesRegex(ValueError, "one monthly YAML"):
             builder.collect(self.root)
 
-    def test_weekly_invalid_shape_and_week(self):
+    def test_monthly_invalid_shape_and_week(self):
         for filename, content in [
-            ("2026-W99.yaml", "papers: []"),
-            ("2021-W53.yaml", "papers: []"),
+            ("2026-13.yaml", "papers: []"),
+            ("2026-00.yaml", "papers: []"),
             ("week41.yaml", "papers: []"),
-            ("2026-W41.yaml", "papers: []"),
-            ("2026-W41.yaml", "papers: wrong"),
-            ("2026-W41.yaml", "papers: [null]"),
+            ("2026-10.yaml", "papers: []"),
+            ("2026-10.yaml", "papers: wrong"),
+            ("2026-10.yaml", "papers: [null]"),
         ]:
             path = self.member_dir / filename
             path.write_text(content)

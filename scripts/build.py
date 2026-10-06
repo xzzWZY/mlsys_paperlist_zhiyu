@@ -87,21 +87,21 @@ def validate_paper(meta, path, root, config, ledger, now, example=False):
                 source=path.relative_to(root).as_posix())
 
 
-def load_weekly(path, root, config, ledger, now, example=False):
-    if not re.fullmatch(r"\d{4}-W\d{2}", path.stem):
-        raise ValueError("weekly filename must be YYYY-Www.yaml, e.g. 2026-W41.yaml")
-    year, week = path.stem.split("-W")
-    date.fromisocalendar(int(year), int(week), 1)
+def load_monthly(path, root, config, ledger, now, example=False):
+    if not re.fullmatch(r"\d{4}-\d{2}", path.stem):
+        raise ValueError("monthly filename must be YYYY-MM.yaml, e.g. 2026-10.yaml")
+    year, month = path.stem.split("-")
+    date(int(year), int(month), 1)
     batch = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(batch, dict) or set(batch) != {"papers"}:
-        raise ValueError("weekly file must contain only a top-level 'papers' list")
+        raise ValueError("monthly file must contain only a top-level 'papers' list")
     if not isinstance(batch["papers"], list) or not batch["papers"]:
         raise ValueError("papers must be a nonempty list")
     result = []
     for index, meta in enumerate(batch["papers"], start=1):
         try:
             note = validate_paper(meta, path, root, config, ledger, now, example)
-            note["file_week"] = path.stem
+            note["file_month"] = path.stem
             result.append(note)
         except (ValueError, TypeError) as exc:
             raise ValueError(f"papers[{index}]: {exc}") from exc
@@ -120,25 +120,25 @@ def collect(root, now=None):
         timestamp(value)
     now = now or datetime.now(timezone.utc).isoformat()
     entries, errors, seen = [], [], set()
-    for folder, example in (("entries", False), ("examples", True)):
+    for folder, example in (("entries", False),):
         batches = set()
         paths = sorted(p for p in (root / folder).rglob("*") if p.suffix in (".yaml", ".yml", ".md"))
         for path in paths:
             try:
                 if path.is_symlink() or not path.is_file() or len(path.relative_to(root / folder).parts) != 2:
-                    raise ValueError("submissions must be regular files at <member>/YYYY-Www.yaml")
+                    raise ValueError("submissions must be regular files at <member>/YYYY-MM.yaml")
                 if path.suffix == ".md":
                     batch = [load_note(path, root, config, ledger, now, example)]
                 else:
                     batch_key = (path.parent.name, path.stem)
                     if batch_key in batches:
-                        raise ValueError("only one weekly YAML file per member and week is allowed")
+                        raise ValueError("only one monthly YAML file per member and month is allowed")
                     batches.add(batch_key)
-                    batch = load_weekly(path, root, config, ledger, now, example)
+                    batch = load_monthly(path, root, config, ledger, now, example)
                 for note in batch:
                     key = (example, note["id"])
                     if key in seen:
-                        raise ValueError(f"duplicate paper for this member: {note['paper_id']} (including across weeks)")
+                        raise ValueError(f"duplicate paper for this member: {note['paper_id']} (including across months)")
                     seen.add(key)
                     entries.append(note)
             except (ValueError, TypeError, yaml.YAMLError) as exc:
@@ -151,7 +151,7 @@ def collect(root, now=None):
 def build(root=ROOT, record=False, check=False):
     config, ledger, notes = collect(root)
     if check:
-        print(f"Validated {len(notes)} notes (including examples).")
+        print(f"Validated {len(notes)} paper submissions.")
         return
     if record:
         for note in notes:

@@ -5,7 +5,9 @@
   "timezone": "America/Chicago",
   "weekly_target": 2,
   "members": {
-    "xzzWZY": "Zhiyu Wu"
+    "xzzWZY": "Zhiyu Wu",
+    "demo-reader": "Member A",
+    "demo-reader-2": "Member B"
   },
   "topics": {
     "llm-inference": "LLM inference",
@@ -22,9 +24,5 @@
     "data-centric-ml": "Data-centric ML",
     "evaluation": "Evaluation",
     "multimodal": "Multimodal learning"
-  },
-  "example_members": {
-    "demo-reader": "Example member A",
-    "demo-reader-2": "Example member B"
   }
 }
