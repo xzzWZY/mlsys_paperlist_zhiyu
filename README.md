@@ -12,8 +12,8 @@ One file per member per month. Add or edit papers in the same file throughout th
 
 | Paper | Year / venue | Topics |
 | --- | --- | --- |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](catalog/by-topic/hardware-systems.md), [LLM inference](catalog/by-topic/llm-inference.md) |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](catalog/by-topic/architectures.md), [Compilers &amp; kernels](catalog/by-topic/compilers-kernels.md) |
-| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](catalog/by-topic/llm-inference.md), [Quantization](catalog/by-topic/quantization.md) |
-| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](catalog/by-topic/efficient-finetuning.md), [Optimization](catalog/by-topic/optimization.md) |
-| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](catalog/by-topic/distributed-training.md), [Hardware &amp; systems](catalog/by-topic/hardware-systems.md) |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](catalog/by-topic/README.md#hardware-systems), [LLM inference](catalog/by-topic/README.md#llm-inference) |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](catalog/by-topic/README.md#architectures), [Compilers &amp; kernels](catalog/by-topic/README.md#compilers-kernels) |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](catalog/by-topic/README.md#llm-inference), [Quantization](catalog/by-topic/README.md#quantization) |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](catalog/by-topic/README.md#efficient-finetuning), [Optimization](catalog/by-topic/README.md#optimization) |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](catalog/by-topic/README.md#distributed-training), [Hardware &amp; systems](catalog/by-topic/README.md#hardware-systems) |

@@ -43,14 +43,24 @@ class IndexTests(unittest.TestCase):
         self.assertFalse((catalog / 'by-month/2026-11.md').exists())
         self.assertFalse((catalog / 'by-week/2026-W45.md').exists())
         self.assertFalse((catalog / 'by-member').exists())
-        self.assertIn('Submitted by', (catalog / 'by-month/2026-10.md').read_text())
-        self.assertNotIn('First added', (catalog / 'by-topic/llm-inference.md').read_text())
-        self.assertEqual((catalog / 'by-topic/llm-inference.md').read_text().count('[PagedAttention]'), 1)
-        self.assertEqual((catalog / 'by-topic/quantization.md').read_text().count('[PagedAttention]'), 1)
+        months = (catalog / 'by-month/README.md').read_text()
+        self.assertIn('Submitted by', months)
+        self.assertIn('## 2026-10', months)
+        self.assertNotIn('## 2026-11', months)
+        topics = (catalog / 'by-topic/README.md').read_text()
+        self.assertNotIn('First added', topics)
+        self.assertEqual(topics.count('[PagedAttention]'), 2)
+        for section in topics.split('## ')[1:]:
+            self.assertEqual(section.count('[PagedAttention]'), 1)
         for page in [self.root / 'README.md', *catalog.rglob('*.md')]:
             for target in re.findall(r'\]\(([^)]+)\)', page.read_text()):
                 if not target.startswith(('http:', 'https:')):
-                    self.assertTrue((page.parent / unquote(target)).exists(), (page, target))
+                    filename, _, anchor = unquote(target).partition('#')
+                    destination = page.parent / filename if filename else page
+                    self.assertTrue(destination.is_file(), (page, target))
+                    if anchor:
+                        content = destination.read_text()
+                        self.assertTrue(f'<a name="{anchor}"></a>' in content or f'# {anchor.replace("-", " ").capitalize()}' in content, (page, target))
         source.unlink()
         other.unlink()
         indexer.generate(self.root)

@@ -4,12 +4,86 @@
 
 [All papers](../../README.md) · [By month](../by-month/README.md) · [By topic](README.md)
 
-- [Architectures](architectures.md) (1)
-- [Compilers &amp; kernels](compilers-kernels.md) (1)
-- [Distributed training](distributed-training.md) (1)
-- [Efficient fine-tuning](efficient-finetuning.md) (1)
-- [Hardware &amp; systems](hardware-systems.md) (2)
-- [LLM inference](llm-inference.md) (2)
-- [Optimization](optimization.md) (1)
-- [Quantization](quantization.md) (1)
+[Architectures (1)](#architectures) · [Compilers &amp; kernels (1)](#compilers-kernels) · [Distributed training (1)](#distributed-training) · [Efficient fine-tuning (1)](#efficient-finetuning) · [Hardware &amp; systems (2)](#hardware-systems) · [LLM inference (2)](#llm-inference) · [Optimization (1)](#optimization) · [Quantization (1)](#quantization)
 
+<a name="architectures"></a>
+
+## Architectures
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](README.md#architectures), [Compilers &amp; kernels](README.md#compilers-kernels) |
+
+[Back to top](#by-topic)
+
+<a name="compilers-kernels"></a>
+
+## Compilers &amp; kernels
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](README.md#architectures), [Compilers &amp; kernels](README.md#compilers-kernels) |
+
+[Back to top](#by-topic)
+
+<a name="distributed-training"></a>
+
+## Distributed training
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](README.md#distributed-training), [Hardware &amp; systems](README.md#hardware-systems) |
+
+[Back to top](#by-topic)
+
+<a name="efficient-finetuning"></a>
+
+## Efficient fine-tuning
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](README.md#efficient-finetuning), [Optimization](README.md#optimization) |
+
+[Back to top](#by-topic)
+
+<a name="hardware-systems"></a>
+
+## Hardware &amp; systems
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](README.md#hardware-systems), [LLM inference](README.md#llm-inference) |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](README.md#distributed-training), [Hardware &amp; systems](README.md#hardware-systems) |
+
+[Back to top](#by-topic)
+
+<a name="llm-inference"></a>
+
+## LLM inference
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](README.md#hardware-systems), [LLM inference](README.md#llm-inference) |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](README.md#llm-inference), [Quantization](README.md#quantization) |
+
+[Back to top](#by-topic)
+
+<a name="optimization"></a>
+
+## Optimization
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](README.md#efficient-finetuning), [Optimization](README.md#optimization) |
+
+[Back to top](#by-topic)
+
+<a name="quantization"></a>
+
+## Quantization
+
+| Paper | Year / venue | Topics |
+| --- | --- | --- |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](README.md#llm-inference), [Quantization](README.md#quantization) |
+
+[Back to top](#by-topic)

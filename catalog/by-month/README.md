@@ -4,6 +4,27 @@
 
 [All papers](../../README.md) · [By month](README.md) · [By topic](../by-topic/README.md)
 
-- [2026-10](2026-10.md) (2)
-- [2026-09](2026-09.md) (3)
+[2026-10 (2)](#2026-10) · [2026-09 (3)](#2026-09)
 
+<a name="2026-10"></a>
+
+## 2026-10
+
+| Paper | Year / venue | Topics | Submitted by | First added |
+| --- | --- | --- | --- | --- |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | 2023 SOSP | [Hardware &amp; systems](../by-topic/README.md#hardware-systems), [LLM inference](../by-topic/README.md#llm-inference) | [Alex Chen](../../entries/Alex_Chen/2026-10.yaml), [Jamie Li](../../entries/Jamie_Li/2026-10.yaml) | 2026-10-05 |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) | 2022 NeurIPS | [Architectures](../by-topic/README.md#architectures), [Compilers &amp; kernels](../by-topic/README.md#compilers-kernels) | [Alex Chen](../../entries/Alex_Chen/2026-10.yaml) | 2026-10-05 |
+
+[Back to top](#by-month)
+
+<a name="2026-09"></a>
+
+## 2026-09
+
+| Paper | Year / venue | Topics | Submitted by | First added |
+| --- | --- | --- | --- | --- |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | 2023 ICLR | [LLM inference](../by-topic/README.md#llm-inference), [Quantization](../by-topic/README.md#quantization) | [Jamie Li](../../entries/Jamie_Li/2026-09.yaml) | 2026-09-29 |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) | 2022 ICLR | [Efficient fine-tuning](../by-topic/README.md#efficient-finetuning), [Optimization](../by-topic/README.md#optimization) | [Jamie Li](../../entries/Jamie_Li/2026-09.yaml) | 2026-09-29 |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) | 2020 SC | [Distributed training](../by-topic/README.md#distributed-training), [Hardware &amp; systems](../by-topic/README.md#hardware-systems) | [Alex Chen](../../entries/Alex_Chen/2026-09.yaml) | 2026-09-23 |
+
+[Back to top](#by-month)
