@@ -47,7 +47,7 @@ papers:
 2. Select **Add file → Create new file**. Enter `entries/<your-username>/YYYY-Www.yaml`, replacing the username and ISO year/week. Your username must be registered in [config/site.json](config/site.json); `xzzWZY` is registered already.
 3. Paste the example or [weekly template](templates/weekly.yaml), then fill in your papers.
 4. Click **Commit changes…** and commit to `main`, or open a pull request and merge it after checks pass.
-5. Wait for **Actions → Publish paperlist** to succeed, then refresh the [website](https://xzzWZY.github.io/mlsys_paperlist_zhiyu/). Turn off **Example library** and reset filters to see real contributions.
+5. Wait for **Actions → Update paper indexes** to succeed, then open the [paper index](catalog/README.md). Examples have their own [separate index](catalog/examples/README.md).
 
 Already submitted this week? Edit that same YAML file and append another paper to `papers:`. Next week, create a new file, e.g. `2026-W42.yaml`. Do not copy last week's papers into the new file.
 
@@ -64,7 +64,7 @@ git commit -m "Add papers for week 41"
 git push origin main
 ```
 
-Change the filename to the appropriate ISO week. With [Python setup](README.md#local-preview) complete, optionally validate before committing:
+Change the filename to the appropriate ISO week. With [Python setup](README.md#local-checks) complete, optionally validate before committing:
 
 ```sh
 .venv/bin/python scripts/build.py --check
@@ -72,17 +72,19 @@ Change the filename to the appropriate ISO week. With [Python setup](README.md#l
 
 ## Dates, grouping, and duplicates
 
-- The filename organizes your weekly submission; it does not override the website's submission timestamp. A late upload appears in the week it is first recorded by the publishing workflow, even if its filename names an earlier week.
+- The filename organizes your weekly submission; it does not override the index's submission timestamp. A late upload appears in the week it is first recorded by the index workflow, even if its filename names an earlier week.
 - Weeks run Monday–Sunday in `America/Chicago`. The first successful ingestion time approximates arrival on `main`; it is not an exact push-event timestamp.
 - Each paper has its own persistent timestamp. Appending a paper later gives only that new paper a new timestamp. Editing or migrating an existing paper keeps its date when the member and paper ID stay the same.
-- One member may submit a paper once across all weekly files. arXiv versions count as one paper. Different members may submit the same paper, and the table groups their contributions within the selected week/topic/member group.
+- One member may submit a paper once across all weekly files. arXiv versions count as one paper. Different members may submit the same paper, and the index groups their contributions within the selected week/topic/member group.
 - One weekly file per member is allowed (`.yaml` preferred; `.yml` also accepted). Filenames must use a real ISO week, including two digits, such as `2026-W05.yaml`.
 - Paper totals count unique papers. Member statistics count submissions; the four-week average includes the current partial week and the three preceding weeks. Two per week is a guideline, not a validation requirement.
 - Existing single-paper Markdown files remain readable for compatibility. To migrate, move their metadata into a weekly YAML file and remove the old Markdown file in the same commit. Do not retain both copies. No new Markdown files are needed.
 
-## Reading the table
+## Browse and search in GitHub
 
-Switch **By week / By topic / By member**, combine search and filters, and use **Sort papers** for newest/oldest added, title, or publication year. Sorting applies within each group. Click a title to read the paper; click a contributor to open the source submission. On narrow screens, scroll the table horizontally.
+Open [All papers](catalog/README.md), [By week](catalog/by-week/README.md), [By topic](catalog/by-topic/README.md), or [By member](catalog/by-member/README.md). Click a paper title for the original paper, or YAML for its source. Topic, member, and week cells link to related index pages.
+
+Use browser Find for a page, or [repository search instructions](README.md#search) to search titles and metadata across weekly submissions. GitHub's Markdown view does not provide the old website's dropdown filters or custom sorting.
 
 ## Common errors
 
@@ -93,6 +95,6 @@ Switch **By week / By topic / By member**, combine search and filters, and use *
 | Invalid YAML | Check indentation and quotes. `papers:` must contain a nonempty list. |
 | Invalid week | Use `YYYY-Www.yaml` with a real ISO week number. |
 | Duplicate paper | Remove the duplicate from this or another weekly file; edit the original entry. |
-| Paper not visible | Check `main`, a successful publish run, example mode, and filters. |
+| Paper not visible | Check `main` and a successful index workflow run, then reopen the real paper index. |
 
-See [deployment setup](README.md#enable-public-github-pages) for the maintainer's one-time configuration.
+See [maintainer setup](README.md#maintainer-setup) for the maintainer's one-time configuration.

@@ -1,60 +1,42 @@
-# example paperlist
+# UIUC-MLSys paperlist
 
-A public prototype of a shared reading library for **ML systems and ML algorithms**. Add a weekly YAML file, push it, and let GitHub Actions validate and publish the library.
+[All papers](catalog/README.md) · [By week](catalog/by-week/README.md) · [By topic](catalog/by-topic/README.md) · [By member](catalog/by-member/README.md)
 
-Features: weekly / topic / member views, title and contributor search, combined filters, compact tables with multiple contributors and sorting, stable first-seen dates, and a rolling four-week contribution average. All content and controls are in English. No database, frontend build tool, or external font service is required.
+[Contribute](CONTRIBUTING.md) · [Weekly YAML template](templates/weekly.yaml) · [Examples](catalog/examples/README.md)
 
-## Start reading or contributing
+One YAML file per member per week. GitHub Actions updates the linked Markdown tables after submissions reach `main`. No GitHub Pages or external hosting is required.
 
-- [Contribution guide](CONTRIBUTING.md)
-- [Copy the weekly template](templates/weekly.yaml)
-- [Configure members, topics, and site identity](config/site.json)
-- Intended public URL **after deployment is enabled**: https://xzzWZY.github.io/mlsys_paperlist_zhiyu/
+## Search
 
-Two clearly labeled example entries demonstrate the interface using [PagedAttention](https://arxiv.org/abs/2309.06180) and [FlashAttention](https://arxiv.org/abs/2205.14135). They are not the owner's reading history. The site starts in example mode only when no real notes exist.
+Browse the indexes above, click topic/member/week links inside a table, or use your browser's Find on a rendered page. These are static GitHub tables, not interactive website filters.
 
-## Local preview
+For repository code search, use **Search this repository** and add a title, paper ID, topic ID, or member. Restrict searches to source submissions to avoid matching generated copies:
 
-Requires Python 3.9 or newer:
+```text
+repo:xzzWZY/mlsys_paperlist_zhiyu path:entries/ "llm-inference"
+repo:xzzWZY/mlsys_paperlist_zhiyu path:entries/xzzWZY/ "FlashAttention"
+repo:xzzWZY/mlsys_paperlist_zhiyu path:2026-W41.yaml
+```
+
+For a weekly filename anywhere under a member folder, use `path:2026-W41.yaml`. The filename reflects the submission batch; the **By week** index reflects first recorded arrival time. Replace the repository qualifier when moving to the lab repo. Search indexing can lag; the Markdown indexes are the primary browsing interface.
+
+## Maintainer setup
+
+1. Use a **private repository** for lab papers and grant access to lab members. This code change does not change the visibility of the existing personal prototype.
+2. Update `config/site.json` with the repository URL, title, member usernames, and topics.
+3. Enable Actions. **Update paper indexes** needs `contents: write` and permission to commit to `main`. If branch rules prevent bot writes, generate indexes locally with `--record` and include them in a reviewed PR instead; do not weaken lab branch protections.
+4. If this repository previously published a Pages site, **unpublish it in Settings → Pages**. Removing the deployment workflow alone does not remove an already published site. Do this before adding private lab content.
+
+The bot records timestamps and commits `catalog/` plus `data/added_at.json`. A failed validation leaves existing indexes intact. Concurrent pushes cause regeneration against the latest `main`, rather than overwriting newer submissions. PRs only validate; merged submissions update the indexes.
+
+## Local checks
 
 ```sh
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python scripts/build.py
-.venv/bin/python -m http.server 8000 --bind 127.0.0.1 --directory dist
+.venv/bin/python scripts/build.py --check
+.venv/bin/python scripts/index.py
 ```
 
-Open http://localhost:8000. Generated files live in ignored `dist/`. Relative assets support both the local preview and GitHub Pages project subpaths. Do not use `--record` for ordinary previews: only publication should persist first-seen timestamps.
-
-## Enable public GitHub Pages
-
-1. Push this implementation to `main`.
-2. In **Settings → Pages → Build and deployment**, select **GitHub Actions**.
-3. Ensure the repository permits the publishing workflow's `contents: write` token to commit `data/added_at.json` to `main`. Branch protection must allow this bot write; otherwise publishing stops before deployment. Do not weaken organization-wide protection just to enable this prototype.
-4. Run **Actions → Publish paperlist → Run workflow**, or push a new entry.
-5. Check the workflow and open its deployment URL. Future pushes to `main` update the site automatically; pull requests only validate.
-
-The publishing workflow tests and validates all content before changing the timestamp ledger. It commits dates before deployment, so failed deployments and subsequent edits cannot reset them. Bot commits made with `GITHUB_TOKEN` do not trigger another push workflow. Publishing is serialized; errors leave the last deployed site intact. The workflow uses the latest `main` so queued pushes are eventually included.
-
-For a protected-branch lab repository, adapt ledger persistence to a dedicated automation branch or another durable store before rollout. This prototype intentionally uses a simple tracked ledger on `main`.
-
-## Structure
-
-```text
-config/site.json          Site identity, members, topic vocabulary, weekly target
-entries/<member>/*.yaml     Real paper entries
-examples/<member>/*.yaml    Clearly labeled demonstration entries
-templates/weekly.yaml       Weekly submission template
-data/added_at.json        Persistent contribution timestamps
-scripts/build.py         Validation, static build
-site/                    HTML, CSS, and browser JavaScript
-tests/                   Validation, metadata-only submissions, and date-regression tests
-.github/workflows/       Submission checks and Pages publishing
-```
-
-## Moving this to the lab
-
-Update the repository URL, title, members, and topics in `config/site.json`, and remove or retain the isolated examples as desired. The lab repository has not been changed by this prototype.
-
-**This personal site is public.** A private source repository alone does not make GitHub Pages private. Private project Pages require an eligible organization using GitHub Enterprise Cloud; confirm access controls before deploying lab notes. See [GitHub's private Pages documentation](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site).
+Use `scripts/index.py --record` when intentionally recording new submissions. Without it, dates for unrecorded entries are provisional. The previous website source remains in `site/` for reference, but no workflow builds or deploys it.
