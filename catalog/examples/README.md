@@ -6,9 +6,12 @@
 
 **Demo data — excluded from real contributions.**
 
-2 papers · 2 submissions
+5 papers · 6 submissions
 
 | Paper | Year / venue | Topics | Member | Added week |
 | --- | --- | --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) · [YAML](../../examples/demo-reader/2026-W41.yaml) | 2022 arXiv | [Architectures](by-topic/architectures.md), [Compilers &amp; kernels](by-topic/compilers-kernels.md) | [Example reader](by-member/demo-reader.md) | [2026-W41](by-week/2026-W41.md) |
-| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) · [YAML](../../examples/demo-reader/2026-W41.yaml) | 2023 arXiv | [Hardware &amp; systems](by-topic/hardware-systems.md), [LLM inference](by-topic/llm-inference.md) | [Example reader](by-member/demo-reader.md) | [2026-W41](by-week/2026-W41.md) |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) · [YAML](../../examples/demo-reader/2026-W41.yaml) | 2022 arXiv | [Architectures](by-topic/architectures.md), [Compilers &amp; kernels](by-topic/compilers-kernels.md) | [Example member A](by-member/demo-reader.md) | [2026-W41](by-week/2026-W41.md) |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) · [YAML](../../examples/demo-reader/2026-W41.yaml) | 2023 arXiv | [Hardware &amp; systems](by-topic/hardware-systems.md), [LLM inference](by-topic/llm-inference.md) | [Example member A](by-member/demo-reader.md), [Example member B](by-member/demo-reader-2.md) | [2026-W41](by-week/2026-W41.md) |
+| [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) · [YAML](../../examples/demo-reader-2/2026-W40.yaml) | 2021 arXiv | [Efficient fine-tuning](by-topic/efficient-finetuning.md), [Optimization](by-topic/optimization.md) | [Example member B](by-member/demo-reader-2.md) | [2026-W40](by-week/2026-W40.md) |
+| [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) · [YAML](../../examples/demo-reader-2/2026-W40.yaml) | 2022 arXiv | [LLM inference](by-topic/llm-inference.md), [Quantization](by-topic/quantization.md) | [Example member B](by-member/demo-reader-2.md) | [2026-W40](by-week/2026-W40.md) |
+| [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) · [YAML](../../examples/demo-reader/2026-W39.yaml) | 2019 arXiv | [Distributed training](by-topic/distributed-training.md), [Hardware &amp; systems](by-topic/hardware-systems.md) | [Example member A](by-member/demo-reader.md) | [2026-W39](by-week/2026-W39.md) |

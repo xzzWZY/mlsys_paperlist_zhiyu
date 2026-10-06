@@ -92,7 +92,7 @@ def generate(root=ROOT, record=False):
             for key in sorted(grouping, reverse=kind == 'week'):
                 if not re.fullmatch(r'[A-Za-z0-9_-]+', key):
                     raise ValueError(f'Unsafe index key: {key}')
-                label = config['topics'][key] if kind == 'topic' else config['members'].get(key, 'Example reader') if kind == 'member' else key
+                label = config['topics'][key] if kind == 'topic' else config.get('example_members' if example else 'members', {}).get(key, 'Example reader') if kind == 'member' else key
                 page = listing.parent / f'{key}.md'
                 body += f'- {link(label, page.name)} ({len(grouping[key])})\n'
                 write(page, f'# {text(label)}\n\n{nav(page)}\n\n' + table(page, grouping[key]))

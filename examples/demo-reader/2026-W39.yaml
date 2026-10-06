@@ -1,0 +1,10 @@
+papers:
+- paper_id: arxiv:1910.02054
+  title: 'ZeRO: Memory Optimizations Toward Training Trillion Parameter Models'
+  url: https://arxiv.org/abs/1910.02054
+  year: 2019
+  venue: arXiv
+  topics:
+  - distributed-training
+  - hardware-systems
+  example_added_at: '2026-09-23T16:00:00Z'

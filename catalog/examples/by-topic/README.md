@@ -6,6 +6,10 @@
 
 - [Architectures](architectures.md) (1)
 - [Compilers &amp; kernels](compilers-kernels.md) (1)
-- [Hardware &amp; systems](hardware-systems.md) (1)
-- [LLM inference](llm-inference.md) (1)
+- [Distributed training](distributed-training.md) (1)
+- [Efficient fine-tuning](efficient-finetuning.md) (1)
+- [Hardware &amp; systems](hardware-systems.md) (3)
+- [LLM inference](llm-inference.md) (3)
+- [Optimization](optimization.md) (1)
+- [Quantization](quantization.md) (1)
 

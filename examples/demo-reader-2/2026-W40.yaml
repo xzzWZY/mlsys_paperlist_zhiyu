@@ -1,0 +1,19 @@
+papers:
+- paper_id: arxiv:2106.09685
+  title: 'LoRA: Low-Rank Adaptation of Large Language Models'
+  url: https://arxiv.org/abs/2106.09685
+  year: 2021
+  venue: arXiv
+  topics:
+  - efficient-finetuning
+  - optimization
+  example_added_at: '2026-09-29T16:00:00Z'
+- paper_id: arxiv:2210.17323
+  title: 'GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers'
+  url: https://arxiv.org/abs/2210.17323
+  year: 2022
+  venue: arXiv
+  topics:
+  - quantization
+  - llm-inference
+  example_added_at: '2026-09-29T16:00:00Z'

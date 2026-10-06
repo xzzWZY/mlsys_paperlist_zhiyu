@@ -81,7 +81,7 @@ def validate_paper(meta, path, root, config, ledger, now, example=False):
     added = meta.get("example_added_at") if example else ledger.get(identity, now)
     timestamp(added)
     return dict(meta, paper_id=paper_id, id=identity, member=member,
-                member_name="Example reader" if example else config["members"][member],
+                member_name=config.get("example_members", {}).get(member, "Example reader") if example else config["members"][member],
                 added_at=added, week=week_of(added, config["timezone"]),
                 pending=not example and identity not in ledger, example=example,
                 source=path.relative_to(root).as_posix())

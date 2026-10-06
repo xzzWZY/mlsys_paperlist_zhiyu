@@ -4,5 +4,6 @@
 
 [All papers](../README.md) · [By week](../by-week/README.md) · [By topic](../by-topic/README.md) · [By member](README.md)
 
-- [Example reader](demo-reader.md) (2)
+- [Example member A](demo-reader.md) (3)
+- [Example member B](demo-reader-2.md) (3)
 

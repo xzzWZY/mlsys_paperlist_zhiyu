@@ -36,7 +36,7 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(builder.collect(self.root)[2], [])
         shutil.copytree(ROOT / "examples", self.root / "examples")
         notes = builder.collect(self.root)[2]
-        self.assertEqual(len(notes), 2)
+        self.assertEqual(len(notes), 6)
         self.assertTrue(all(n["example"] for n in notes))
 
     def test_week_uses_chicago_and_iso_year(self):

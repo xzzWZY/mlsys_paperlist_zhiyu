@@ -6,6 +6,10 @@
 
 One YAML file per member per week. GitHub Actions updates the linked Markdown tables after submissions reach `main`. No GitHub Pages or external hosting is required.
 
+## Example library
+
+[Browse 5 example papers](catalog/examples/README.md) across 3 weeks and 2 fictional members. PagedAttention is submitted by both members to demonstrate deduplication. All dates and member assignments are illustrative.
+
 ## Search
 
 Browse the indexes above, click topic/member/week links inside a table, or use your browser's Find on a rendered page. These are static GitHub tables, not interactive website filters.

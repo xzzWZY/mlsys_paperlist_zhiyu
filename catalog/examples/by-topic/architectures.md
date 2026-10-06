@@ -6,4 +6,4 @@
 
 | Paper | Year / venue | Topics | Member | Added week |
 | --- | --- | --- | --- | --- |
-| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) · [YAML](../../../examples/demo-reader/2026-W41.yaml) | 2022 arXiv | [Architectures](architectures.md), [Compilers &amp; kernels](compilers-kernels.md) | [Example reader](../by-member/demo-reader.md) | [2026-W41](../by-week/2026-W41.md) |
+| [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) · [YAML](../../../examples/demo-reader/2026-W41.yaml) | 2022 arXiv | [Architectures](architectures.md), [Compilers &amp; kernels](compilers-kernels.md) | [Example member A](../by-member/demo-reader.md) | [2026-W41](../by-week/2026-W41.md) |

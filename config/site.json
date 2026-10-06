@@ -4,7 +4,9 @@
   "repository": "https://github.com/xzzWZY/mlsys_paperlist_zhiyu",
   "timezone": "America/Chicago",
   "weekly_target": 2,
-  "members": {"xzzWZY": "Zhiyu Wu"},
+  "members": {
+    "xzzWZY": "Zhiyu Wu"
+  },
   "topics": {
     "llm-inference": "LLM inference",
     "distributed-training": "Distributed training",
@@ -20,5 +22,9 @@
     "data-centric-ml": "Data-centric ML",
     "evaluation": "Evaluation",
     "multimodal": "Multimodal learning"
+  },
+  "example_members": {
+    "demo-reader": "Example member A",
+    "demo-reader-2": "Example member B"
   }
 }
