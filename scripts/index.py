@@ -79,6 +79,8 @@ def generate(root=ROOT, record=False):
 
     home = root / 'README.md'
     intro = f'# {text(config["title"])}\n\n'
+    intro += 'A shared reading list for machine learning systems and algorithms, maintained through monthly YAML submissions and one shared PR each week.\n\n'
+    intro += '## Explore and contribute\n\n'
     for label, target, description in [
         ('All papers', 'catalog/all-papers.md', 'Browse the full deduplicated paper list.'),
         ('By month', 'catalog/by-month/README.md', 'Browse papers by their first-added month.'),
@@ -88,6 +90,14 @@ def generate(root=ROOT, record=False):
         ('Weekly PR guide — organizers only', 'docs/organizer.md', 'Manage classification, weekly merges, and automatic branches.'),
     ]:
         intro += f'- {link(label, target)} — {description}\n'
+    intro += '\n## Members\n\n'
+    intro += '- Add papers to your monthly YAML file on the current shared submission branch.\n'
+    intro += '- Provide **title, URL, and year**; venue is optional. No topics or individual PRs are needed.\n'
+    intro += '- Sync before editing and push to the shared branch, **not `main`**.\n'
+    intro += '\n## Organizers\n\n'
+    intro += '- Once a week, use AI to assign missing topics, run checks, and open the shared PR.\n'
+    intro += '- Review and merge the PR, then confirm the paper indexes update.\n'
+    intro += '- Share the next submission branch, created automatically after merge when enabled. The first branch needs manual setup.\n'
     write(home, intro)
     all_papers = base / 'all-papers.md'
     write(all_papers, f'# All papers ({len(records)})\n\n{nav(all_papers)}\n\n' + table(all_papers, records))

@@ -2,9 +2,25 @@
 
 # example paperlist
 
+A shared reading list for machine learning systems and algorithms, maintained through monthly YAML submissions and one shared PR each week.
+
+## Explore and contribute
+
 - [All papers](catalog/all-papers.md) — Browse the full deduplicated paper list.
 - [By month](catalog/by-month/README.md) — Browse papers by their first-added month.
 - [By topic](catalog/by-topic/README.md) — Browse research areas and uncategorized papers.
 - [Contribute](CONTRIBUTING.md) — Add or update your monthly submission.
 - [YAML template](templates/monthly.yaml) — Copy the submission format.
 - [Weekly PR guide — organizers only](docs/organizer.md) — Manage classification, weekly merges, and automatic branches.
+
+## Members
+
+- Add papers to your monthly YAML file on the current shared submission branch.
+- Provide **title, URL, and year**; venue is optional. No topics or individual PRs are needed.
+- Sync before editing and push to the shared branch, **not `main`**.
+
+## Organizers
+
+- Once a week, use AI to assign missing topics, run checks, and open the shared PR.
+- Review and merge the PR, then confirm the paper indexes update.
+- Share the next submission branch, created automatically after merge when enabled. The first branch needs manual setup.
