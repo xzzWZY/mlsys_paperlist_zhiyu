@@ -4,7 +4,7 @@ Run only when a member asks to classify papers or prepare the weekly PR. AI does
 
 ## Shared branch
 
-Use the lab's existing `submissions/YYYY-Www` branch (ISO week), with one PR to `main`. Confirm the intended week from the request or current branch; ask if ambiguous. If asked to create a new weekly branch, start from the latest `main`. Never reset or force-push a shared branch. Preserve others' changes and do not create a separate classification PR. Ask the organizer to pause editing while preparing the final batch.
+Use the lab's existing `submissions/YYYY-MM-DD_to_YYYY-MM-DD` branch (date range), with one PR to `main`. Confirm the intended period from the request or current branch; ask if ambiguous. Use the branch automatically created after the previous submission PR merged. Create a branch manually only for initial setup or when automation is disabled and the organizer requests it. Never reset or force-push a shared branch. Preserve others' changes and do not create a separate classification PR. Ask the organizer to pause editing while preparing the final batch.
 
 ## Classify
 
@@ -34,8 +34,8 @@ Run with an environment containing `requirements.txt`:
 
 Both checks must pass before opening/updating the PR. Missing topics block this step, even if ordinary draft validation succeeds. Do not stage generated Markdown, the first-added ledger, or unrelated changes.
 
-If the member requested weekly PR preparation, commit the scoped changes, push the shared branch normally, and open a PR to `main` titled `Papers: YYYY-Www`, or update the existing PR for that branch. A request only to classify topics calls for a reviewable diff, not a commit or PR. Never open duplicate PRs. If a concurrent push occurs, safely integrate it and rerun checks before retrying; never force-push.
+If the member requested weekly PR preparation, commit the scoped changes, push the shared branch normally, and open a PR to `main` titled `Paper submission [YYYY-MM-DD ~ YYYY-MM-DD]`, or update the existing PR for that branch. A request only to classify topics calls for a reviewable diff, not a commit or PR. Never open duplicate PRs. If a concurrent push occurs, safely integrate it and rerun checks before retrying; never force-push.
 
 Include a short table of newly classified papers, topics, evidence links, and rationale, plus validation results. Request organizer review; do not merge automatically. If checks fail or publishing fails, report the blocker accurately without claiming the PR is ready.
 
-After organizer approval and squash merge, delete the merged branch and create the next weekly branch from the latest main (including the index bot's update). These lifecycle actions require the organizer's request.
+After organizer approval and squash merge, the enabled **Start next submission period** workflow updates indexes and creates the next dated branch. Do not create a second branch yourself. See `docs/organizer.md` for setup, the toggle, and recovery. Delete a merged branch only if requested.

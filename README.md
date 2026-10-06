@@ -7,3 +7,4 @@
 - [By topic](catalog/by-topic/README.md) — Browse research areas and uncategorized papers.
 - [Contribute](CONTRIBUTING.md) — Add or update your monthly submission.
 - [YAML template](templates/monthly.yaml) — Copy the submission format.
+- [Weekly PR guide — organizers only](docs/organizer.md) — Manage classification, weekly merges, and automatic branches.

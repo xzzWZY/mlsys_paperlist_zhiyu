@@ -1,0 +1,36 @@
+name: Start next submission period
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: paper-indexes
+  cancel-in-progress: false
+jobs:
+  next-period:
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      startsWith(github.event.pull_request.head.ref, 'submissions/') &&
+      vars.AUTO_CREATE_SUBMISSION_BRANCH != 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -q
+      - name: Finish indexes on latest main before creating the branch
+        run: bash scripts/update-indexes.sh
+      - name: Create next submission branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AUTO_CREATE_SUBMISSION_BRANCH: ${{ vars.AUTO_CREATE_SUBMISSION_BRANCH }}
+        run: python scripts/next_submission.py

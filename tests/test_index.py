@@ -34,6 +34,7 @@ class IndexTests(unittest.TestCase):
         }))
         shutil.copyfile(ROOT / 'CONTRIBUTING.md', self.root / 'CONTRIBUTING.md')
         shutil.copytree(ROOT / 'templates', self.root / 'templates')
+        shutil.copytree(ROOT / 'docs', self.root / 'docs')
         indexer.generate(self.root)
         home = (self.root / 'catalog/all-papers.md').read_text()
         self.assertEqual(home.count('[PagedAttention]'), 1)
