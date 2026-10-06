@@ -43,11 +43,11 @@ def generate(root=ROOT, record=False):
         targets = [('All papers', root / 'README.md')] + [(f'By {kind}', base / f'by-{kind}/README.md') for kind in ('month', 'topic')]
         return ' · '.join(link(label, relative(path, target)) for label, target in targets)
 
-    # Canonical paper identity is global. Time indexes use its first appearance
+    # Normalized title identity is global. Time indexes use its first appearance
     # across all members, so later duplicate submissions cannot add time rows.
     papers = defaultdict(list)
     for n in notes:
-        papers[n['paper_id']].append(n)
+        papers[n['title_key']].append(n)
     records = []
     for pid, contributions in papers.items():
         contributions.sort(key=lambda n: (timestamp(n['added_at']), n['member']))
@@ -55,7 +55,7 @@ def generate(root=ROOT, record=False):
         records.append(dict(first, contributions=contributions,
                             topics=sorted({t for n in contributions for t in n['topics']}),
                             month=timestamp(first['added_at']).astimezone(ZoneInfo(config['timezone'])).strftime('%Y-%m')))
-    records.sort(key=lambda n: (timestamp(n['added_at']), n['paper_id']), reverse=True)
+    records.sort(key=lambda n: (timestamp(n['added_at']), n['title_key']), reverse=True)
     groups = {kind: defaultdict(list) for kind in ('month', 'topic')}
     for n in records:
         groups['month'][n['month']].append(n)

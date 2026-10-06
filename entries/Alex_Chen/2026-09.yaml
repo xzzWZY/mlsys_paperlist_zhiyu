@@ -1,6 +1,5 @@
 papers:
-- paper_id: arxiv:1910.02054
-  title: 'ZeRO: Memory Optimizations Toward Training Trillion Parameter Models'
+- title: 'ZeRO: Memory Optimizations Toward Training Trillion Parameter Models'
   url: https://arxiv.org/abs/1910.02054
   year: 2020
   venue: SC

@@ -1,6 +1,5 @@
 papers:
-- paper_id: arxiv:2309.06180
-  title: Efficient Memory Management for Large Language Model Serving with PagedAttention
+- title: Efficient Memory Management for Large Language Model Serving with PagedAttention
   url: https://arxiv.org/abs/2309.06180
   year: 2023
   venue: SOSP

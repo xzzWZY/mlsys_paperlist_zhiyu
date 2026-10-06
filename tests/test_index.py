@@ -27,10 +27,10 @@ class IndexTests(unittest.TestCase):
         source = self.member_dir / '2026-10.yaml'
         other = self.root / 'entries/reader-b/2026-11.yaml'
         other.parent.mkdir(parents=True)
-        other.write_text(source.read_text().replace("llm-inference", "quantization"))
+        other.write_text(source.read_text().replace("llm-inference", "quantization").replace("PagedAttention", "PAGEDATTENTION!").replace("https://arxiv.org/abs/2309.06180", "https://example.org/paper.pdf"))
         (self.root / 'data/added_at.json').write_text(json.dumps({
-            'Zhiyu_Wu/arxiv:2309.06180': '2026-10-05T16:00:00Z',
-            'reader-b/arxiv:2309.06180': '2026-11-02T16:00:00Z',
+            'Zhiyu_Wu/title:pagedattention': '2026-10-05T16:00:00Z',
+            'reader-b/title:pagedattention': '2026-11-02T16:00:00Z',
         }))
         shutil.copyfile(ROOT / 'CONTRIBUTING.md', self.root / 'CONTRIBUTING.md')
         shutil.copytree(ROOT / 'templates', self.root / 'templates')
@@ -71,12 +71,12 @@ class IndexTests(unittest.TestCase):
         path = self.monthly()
         indexer.generate(self.root, record=True)
         ledger_path = self.root / 'data/added_at.json'
-        first = json.loads(ledger_path.read_text())['Zhiyu_Wu/arxiv:2309.06180']
+        first = json.loads(ledger_path.read_text())['Zhiyu_Wu/title:pagedattention']
         paper = yaml.safe_load(path.read_text())['papers'][0]
-        self.monthly(papers=[dict(paper, title='Edited title'), dict(paper, paper_id='arxiv:2205.14135', title='FlashAttention')])
+        self.monthly(papers=[dict(paper, title='PAGEDATTENTION!'), dict(paper, title='FlashAttention')])
         indexer.generate(self.root, record=True)
         ledger = json.loads(ledger_path.read_text())
-        self.assertEqual(ledger['Zhiyu_Wu/arxiv:2309.06180'], first)
+        self.assertEqual(ledger['Zhiyu_Wu/title:pagedattention'], first)
         self.assertEqual(len(ledger), 2)
         self.assertNotIn('By week', (self.root / 'README.md').read_text())
 

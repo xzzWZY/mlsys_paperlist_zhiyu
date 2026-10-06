@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import re
 import sys
+import unicodedata
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
@@ -13,15 +14,14 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def canonical_id(value):
-    if not isinstance(value, str):
-        raise ValueError("paper_id must be a string")
-    value = value.strip().lower()
-    if re.fullmatch(r"arxiv:(?:\d{4}\.\d{4,5}|[a-z.-]+/\d{7})(?:v\d+)?", value):
-        return re.sub(r"v\d+$", "", value)
-    if re.fullmatch(r"doi:10\.\d{4,9}/\S+", value):
-        return value
-    raise ValueError("paper_id must be arxiv:<identifier> or doi:<identifier>")
+def title_key(value):
+    """Match titles by Unicode-normalized words, retaining meaningful symbols."""
+    value = unicodedata.normalize("NFKC", value).casefold()
+    value = "".join(" " if unicodedata.category(c).startswith("P") else c for c in value)
+    value = " ".join(value.split())
+    if not any(c.isalnum() for c in value):
+        raise ValueError("title must contain letters or numbers")
+    return value
 
 
 def timestamp(value):
@@ -36,10 +36,10 @@ def timestamp(value):
 def validate_paper(meta, path, root, config, ledger, now):
     if not isinstance(meta, dict):
         raise ValueError("each paper must be a mapping")
-    allowed = {"paper_id", "title", "url", "year", "venue", "topics", "code_url"}
+    allowed = {"title", "url", "year", "venue", "topics", "code_url"}
     if set(meta) - allowed:
         raise ValueError(f"unknown metadata fields: {sorted(set(meta) - allowed)}")
-    for key in ("paper_id", "title", "url"):
+    for key in ("title", "url"):
         if not isinstance(meta.get(key), str) or not meta[key].strip():
             raise ValueError(f"{key} must be a nonempty string")
     for key in ("url", "code_url"):
@@ -59,11 +59,11 @@ def validate_paper(meta, path, root, config, ledger, now):
     member = path.parent.name
     if member not in config["members"]:
         raise ValueError(f"unknown member '{member}'; add them to config/paperlist.json")
-    paper_id = canonical_id(meta["paper_id"])
-    identity = f"{member}/{paper_id}"
+    key = title_key(meta["title"])
+    identity = f"{member}/title:{key}"
     added = ledger.get(identity, now)
     timestamp(added)
-    return dict(meta, paper_id=paper_id, id=identity, member=member,
+    return dict(meta, title_key=key, id=identity, member=member,
                 member_name=config["members"][member],
                 added_at=added,
                 source=path.relative_to(root).as_posix())
@@ -115,7 +115,7 @@ def collect(root, now=None):
             batches.add(batch_key)
             for note in load_monthly(path, root, config, ledger, now):
                 if note["id"] in seen:
-                    raise ValueError(f"duplicate paper for this member: {note['paper_id']} (including across months)")
+                    raise ValueError(f"duplicate paper for this member: {note['title']} (including across months)")
                 seen.add(note["id"])
                 entries.append(note)
         except (ValueError, TypeError, yaml.YAMLError) as exc:

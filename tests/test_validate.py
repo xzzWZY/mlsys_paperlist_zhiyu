@@ -22,7 +22,7 @@ class ValidationTests(unittest.TestCase):
         self.member_dir = self.root / "entries/Zhiyu_Wu"
         self.member_dir.mkdir(parents=True)
         self.text = '\n'.join([
-            '---', 'paper_id: "arxiv:2309.06180"', 'title: "PagedAttention"',
+            '---', 'title: "PagedAttention"',
             'url: "https://arxiv.org/abs/2309.06180"', 'year: 2023',
             'topics: [llm-inference]', '---', ''
         ])
@@ -42,12 +42,33 @@ class ValidationTests(unittest.TestCase):
         return path
 
 
-    def test_arxiv_versions_are_duplicates(self):
+    def test_normalized_titles_are_duplicates(self):
         import yaml
         paper = yaml.safe_load(self.text.split("---")[1])
-        self.monthly(papers=[paper, dict(paper, paper_id="arxiv:2309.06180v2")])
+        self.monthly(papers=[paper, dict(paper, title="  PAGEDATTENTION!  ", url="https://example.org/paper.pdf")])
         with self.assertRaisesRegex(ValueError, "duplicate paper"):
             builder.collect(self.root)
+
+    def test_url_is_required_and_must_be_http(self):
+        import yaml
+        paper = yaml.safe_load(self.text.split("---")[1])
+        for url in (None, "", "javascript:alert(1)", "/paper.pdf"):
+            candidate = dict(paper)
+            if url is None:
+                candidate.pop("url")
+            else:
+                candidate["url"] = url
+            self.monthly(papers=[candidate])
+            with self.assertRaisesRegex(ValueError, "url"):
+                builder.collect(self.root)
+        self.monthly(papers=[dict(paper, url="https://example.org/paper.pdf")])
+        self.assertEqual(len(builder.collect(self.root)[2]), 1)
+
+    def test_unicode_and_punctuation_title_normalization(self):
+        self.assertEqual(builder.title_key("Ｆｏｏ: Bar—Baz!"), builder.title_key("foo bar baz"))
+        self.assertNotEqual(builder.title_key("Model A"), builder.title_key("Model B"))
+        with self.assertRaises(ValueError):
+            builder.title_key("...!")
 
     def test_legacy_markdown_is_rejected(self):
         (self.member_dir / "paper.md").write_text(self.text)
